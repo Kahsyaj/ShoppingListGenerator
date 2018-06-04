@@ -1,6 +1,7 @@
 ############################################################################
-# Class representing a simple ingredient which could be affected to a Meal #
+# Class representing a simple Ingredient which could be affected to a Meal #
 ############################################################################
+
 
 class Ingredient:
     def __init__(self, name):
