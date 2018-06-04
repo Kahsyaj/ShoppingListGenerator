@@ -7,6 +7,7 @@ class Ingredient:
     def __init__(self, name):
         self.name = name
 
+    # Getters and setters
     def get_name(self):
         return self.name
 

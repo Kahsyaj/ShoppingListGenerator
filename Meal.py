@@ -6,8 +6,9 @@
 class Meal:
     def __init__(self, name):
         self.name = name
-        self.recipe = set()
+        self.recipe = []
 
+    # Getters and setters
     def get_name(self):
         return self.name
 
@@ -25,6 +26,7 @@ class Meal:
     :param ingredient_name : the name of the ingredient to check
     :return : True if the ingredient is in the recipe else False 
     """
+
     def in_recipe(self, ingredient_name):
         answ = True
         for elt in self.recipe:
@@ -39,6 +41,7 @@ class Meal:
     :param qty : the quantity of the ingredient expressed in grams
     :return : True if success else False
     """
+
     def add_ingredient(self, ingredient, qty):
         done = False
         if not self.in_recipe(ingredient.get_name):
@@ -51,6 +54,7 @@ class Meal:
     :param ingredient_name : the name of the ingredient to remove
     :return True if success else False
     """
+
     def remove_ingredient(self, ingredient_name):
         for elt in self.recipe:
             if ingredient_name == elt[0].get_name:
@@ -64,6 +68,7 @@ class Meal:
     :param new_qty : the new quantity to define
     :return : True if success else False
     """
+
     def set_quantity(self, ingredient_name, new_qty):
         if not self.in_recipe(ingredient_name):
             return False
@@ -71,4 +76,3 @@ class Meal:
             if ingredient_name == elt[0].get_name:
                 elt[1] = new_qty
                 return True
-
