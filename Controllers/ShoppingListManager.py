@@ -1,11 +1,12 @@
 #######################################################################################################
 # Manager class of ShoppingList which deals with shopping lists saving / loading / setting / deleting #
 #######################################################################################################
-import Manager
+from Manager import Manager
 
 
 class PurchaseManager(Manager):
 
     def __init__(self, usr="root", psswd="root"):
-        Manager.__init__(self, "shoppinglists", usr, psswd)
+        self.table = "Shoppinglists"
+        Manager.__init__(self, self.table, usr, psswd)
 

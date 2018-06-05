@@ -8,17 +8,13 @@ import mysql.connector as mariadb
 
 
 class Manager:
-    """
-    Manager constructor - May have both mode further for offline use
-    :param mode : Defines if save are managed into file or in database
-    """
+
     def __init__(self, folder, usr="root", psswd="root"):
-        self.folder = "../save/{}/".format(folder)
+        self.folder = "../Save/{}/".format(folder)
         self.ext = ".bak"
         self.database = "ShoppingListGenerator"
         self.user = usr
         self.password = psswd
-        self.tables = []
 
     # Getters and setters
     def get_folder(self):
@@ -26,9 +22,6 @@ class Manager:
 
     def get_database(self):
         return self.database
-
-    def get_tables(self):
-        return self.tables
 
     def get_ext(self):
         return self.ext
@@ -45,9 +38,6 @@ class Manager:
     def set_database(self, new):
         self.database = new
 
-    def set_tables(self, new):
-        self.tables = new
-
     def set_ext(self, new):
         self.ext = new
 
@@ -57,42 +47,43 @@ class Manager:
     def set_password(self, new):
         self.password = new
 
-    """
-    From an object, generate a file name (based on the type of the object and it's name) for saving / managing
-    :param obj : the object from which generate the name
-    """
     def gen_file_name_from_obj(self, obj):
+        """
+            From an object, generate a file name (based on the type of the object and it's name) for saving / managing
+            :param obj : the object from which generate the name
+        """
         return re.sub(r"'(?P<name>[\w]*)'", r"\g<name>" + "_{}{}".format(obj.get_name(), self.ext), type(obj))
 
-    """
-    From an object, generate the associated table name
-    :param obj : the object from which generate the name
-    """
-    def gen_table_name_from_obj(self, obj):
+    @staticmethod
+    def gen_table_name_from_obj(obj):
+        """
+            From an object, generate the associated table name
+            :param obj : the object from which generate the name
+        """
         return re.sub(r"'(?P<name>[\w]*)'", r"\g<name>", type(obj))
 
-    """
-    Save an object (Serialize) into a file (name given with gen_file_name_from_obj()
-    :param : obj : the object to save
-    """
     def file_save(self, obj):
+        """
+            Save an object (Serialize) into a file (name given with gen_file_name_from_obj()
+            :param : obj : the object to save
+        """
         with open(self.folder + self.gen_file_name_from_obj(obj), "wb") as f:
             pickle.dump(obj, f)
 
-    """
-    From a file name, load the associated object and returns it
-    :param file_name : the name of the file to load
-    :return : the object loaded
-    """
     def file_load(self, file_name):
+        """
+            From a file name, load the associated object and returns it
+            :param file_name : the name of the file to load
+            :return : the object loaded
+        """
         with open(self.folder + file_name, "rb") as f:
             return pickle.load(f)
 
-    """
-    Load all the objects from the dest directory into a dict and returns it
-    :return objs : the dictionary containing the objects loaded
-    """
     def files_load(self):
+        """
+            Load all the objects from the dest directory into a dict and returns it
+            :return objs : the dictionary containing the objects loaded
+        """
         objs = dict()
         for file in os.listdir(self.folder):
             with open(self.folder + file, "rb") as f:
@@ -100,10 +91,10 @@ class Manager:
                 objs[file] = obj
         return objs
 
-    """
-    Creates all tables for the database to store ingredients, recipes ect...
-    """
     def init_db(self):
+        """
+            Creates all tables for the database to store ingredients, recipes ect...
+        """
         connector = self.get_connector()
         cursor = connector.cursor()
         cursor.execute(
@@ -134,5 +125,10 @@ class Manager:
     :return connector : the mariadb cursor
     """
     def get_connector(self):
-        connector = mariadb.connect(user=self.user, password=self.password, database=self.database)
+        try:
+            connector = mariadb.connect(user=self.user, password=self.password, database=self.database)
+        except mariadb.errors.ProgrammingError:
+            print("Impossible to connect to the database.\nThe identifiers might not be correct :\nuser : {}"
+                  "\npassword : {}\ndatabase : {}".format(self.user, self.password, self.database))
+            quit(1)
         return connector

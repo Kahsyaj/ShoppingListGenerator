@@ -1,11 +1,12 @@
 ##########################################################################################
 # Manager class of Recipe which deals with recipes saving / loading / setting / deleting #
 ##########################################################################################
-import Manager
-
+from Manager import Manager
+import mysql.connector as mariadb
 
 class RecipeManager(Manager):
 
     def __init__(self, usr="root", psswd="root"):
-        Manager.__init__(self, "recipes", usr, psswd)
+        self.table = "Recipe"
+        Manager.__init__(self, self.table, usr, psswd)
 

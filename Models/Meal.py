@@ -7,7 +7,7 @@ class Meal:
 
     def __init__(self, id, name, recipe):
         self.id = id
-        self.name = name
+        self.name = str(name)
         self.recipe = recipe
 
     # Getters and setters
@@ -30,5 +30,8 @@ class Meal:
         self.recipe = new
 
     def describe(self):
+        """
+            Display a representation of the object
+        """
         print("---Meal---\n{}".format(self.name))
         self.recipe.describe()

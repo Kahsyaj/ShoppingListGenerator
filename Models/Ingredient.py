@@ -7,7 +7,7 @@ class Ingredient:
 
     def __init__(self, id, name):
         self.id = id
-        self.name = name
+        self.name = str(name)
 
     # Getters and setters
     def get_id(self):
@@ -22,8 +22,8 @@ class Ingredient:
     def set_name(self, new):
         self.name = str(new)
 
-    """
-    Display a representation of the object
-    """
     def describe(self):
+        """
+            Display a representation of the object
+        """
         print("---Ingredient---\n{}".format(self.name))
