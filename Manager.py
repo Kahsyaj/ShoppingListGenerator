@@ -109,8 +109,8 @@ class Manager:
     Creates all tables for the database to store ingredients, recipes ect...
     """
     def init_db(self):
-        mariadb_connect = mariadb.connect(user=self.user, password=self.password, database=self.dest)
-        cursor = mariadb_connect.cursor()
+        connector = self.get_connector()
+        cursor = connector.cursor()
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS Ingredient (id_ingredient INT NOT NULL AUTO_INCREMENT, name_ingredient VARCHAR(50), deleted INT(1) DEFAULT 0, "
             "UNIQUE (name_ingredient), CONSTRAINT Ingredient_PK PRIMARY KEY (id_ingredient)) ENGINE=InnoDB")
@@ -132,10 +132,12 @@ class Manager:
             "CONSTRAINT Purchase_Ingredient_FK FOREIGN KEY (id_ingredient) REFERENCES Ingredient(id_ingredient), "
             "CONSTRAINT Purchase_ShoppingList0_FK FOREIGN KEY (id_shoppinglist) REFERENCES ShoppingList(id_shoppinglist)) ENGINE=InnoDB"
         )
+        connector.close()
 
     """
+    Returns a mariadb connector to execute queries
+    :return connector : the mariadb cursor
     """
-    def db_save(self, obj):
-        mariadb_connect = mariadb.connect(user=self.user, password=self.password, database=self.dest)
-        cursor = mariadb_connect.cursor(Prepared=True)
-        cursor.execute
+    def get_connector(self):
+        connector = mariadb.connect(user=self.user, password=self.password, database=self.dest)
+        return connector
