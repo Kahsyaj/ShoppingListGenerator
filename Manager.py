@@ -12,18 +12,13 @@ class Manager:
     Manager constructor - May have both mode further for offline use
     :param mode : Defines if save are managed into file or in database
     """
-    def __init__(self, mode="file", usr="root", psswd="root"):
-        self.mode = mode
-        if mode == "file":
-            self.folder = "../ShpLstSave/"
-            self.ext = ".bak"
-        elif mode == "database":
-            self.database = "ShoppingListGenerator"
-            self.user = usr
-            self.password = psswd
-            self.tables = []
-        else:
-            raise ValueError('You can only choose between "file" and "database".')
+    def __init__(self, folder, usr="root", psswd="root"):
+        self.folder = "../save/{}/".format(folder)
+        self.ext = ".bak"
+        self.database = "ShoppingListGenerator"
+        self.user = usr
+        self.password = psswd
+        self.tables = []
 
     # Getters and setters
     def get_folder(self):
@@ -81,7 +76,7 @@ class Manager:
     :param : obj : the object to save
     """
     def file_save(self, obj):
-        with open(self.gen_file_name_from_obj(obj), "wb") as f:
+        with open(self.folder + self.gen_file_name_from_obj(obj), "wb") as f:
             pickle.dump(obj, f)
 
     """
@@ -139,5 +134,5 @@ class Manager:
     :return connector : the mariadb cursor
     """
     def get_connector(self):
-        connector = mariadb.connect(user=self.user, password=self.password, database=self.dest)
+        connector = mariadb.connect(user=self.user, password=self.password, database=self.database)
         return connector
