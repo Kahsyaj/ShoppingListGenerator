@@ -65,16 +65,16 @@ class IngredientManager(Manager):
         """
             Save an Ingredient object into database
             :param ingredient : the object to save
-            :return : True if success, otherwise False
+            :return : False an error occurred else True
         """
         try:
             connect = Manager.get_connector(self)
             cursor = connect.cursor()
-            cursor.execute("UPDATE `{}` SET name = %s WHERE id = %s".format(self.table), (ingredient.get_name(), ingredient.get_id()))
+            cursor.execute("UPDATE `{}` SET name = %s WHERE id = %s".format(self.table), (ingredient.get_name(), str(ingredient.get_id())))
             connect.commit()
             connect.close()
         except:
-            sys.stderr.write("An error occurred with the object saving.")
+            sys.stderr.write("An error occured with the purchase saving.")
             return False
         return True
 
@@ -86,18 +86,18 @@ class IngredientManager(Manager):
             :return : the Ingredient object loaded, None if not in database
         """
         if name is None and id is None:
-            print("No name or id mentioned.")
+            sys.stderr.write("No name or id mentioned.")
             return False
         else:
             connect = Manager.get_connector(self)
-            cursor = connect.cursor(prepared=True)
+            cursor = connect.cursor(dictionary=True)
             if id is not None:
-                cursor.execute("SELECT * FROM `{}` WHERE id_ingredient = %s".format(self.table), (id,))
+                cursor.execute("SELECT * FROM `{}` WHERE id_ingredient = {}".format(self.table, connect.escape_string(id)))
             else:
-                cursor.execute("SELECT * FROM `{}` WHERE name_ingredient = %s".format(self.table), (name,))
+                cursor.execute("SELECT * FROM `{}` WHERE name_ingredient = {}".format(self.table, connect.escape_string(name)))
             answ = cursor.fetchall()
             if answ is not None:
                 answ = answ[0]
-                return Ingredient(answ[0], answ[1])
+                return Ingredient(answ['id_ingredient'], answ['name_ingredient'])
             else:
                 return None

@@ -60,7 +60,7 @@ class PurchaseManager(Manager):
 
     def db_delete(self, id_shoppinglist):
         """
-            Delete a purchase by its name or its id from the database (soft delete)
+            Delete a purchase by its id_shoppinglist from the database (soft delete)
             :param  id_shoppinglist : the id of the Purchase to delete
             :return : False an error occurred else True
         """
@@ -75,43 +75,40 @@ class PurchaseManager(Manager):
             return False
         return True
 
-    def db_save(self, ingredient):
+    def db_save(self, purchase):
         """
-            Save a purchase object into database
-            :param ingredient : the object to save
-            :return : False an error occurred else True
+            Save a Purchase object into database
+            :param purchase : the object to save
+            :return : True if success, otherwise False
         """
         try:
             connect = Manager.get_connector(self)
             cursor = connect.cursor()
-            cursor.execute("UPDATE `{}` SET name = %s WHERE id = %s".format(self.table), (ingredient.get_name(), str(ingredient.get_id())))
+            for ingredient in purchase.get_ingredients():
+                cursor.execute("UPDATE `{}` SET id_ingredient = %s, quantity = %s WHERE id_shoppinglist = %s".format(self.table),
+                               (ingredient[0].get_id(), ingredient[1], purchase.get_id_shoppinglist()))
             connect.commit()
             connect.close()
         except:
-            sys.stderr.write("An error occured with the purchase saving.")
+            sys.stderr.write("An error occurred with the object saving.")
             return False
         return True
 
-    def db_load(self, id=None, name=None):
+    def db_load(self, id_shoppinglist):
         """
-            From an id or a name, load an Ingredient object from the database
-            :param id : the id of the ingredient to load
-            :param name : the name of the ingredient to load
-            :return : the Ingredient object loaded, None if not in database
+            From an id_shoppinglist, load a Purchase object from the database
+            :param id_shoppinglist : the id of the purchase to load
+            :return : the Purchase object loaded, None if not in database
         """
-        if name is None and id is None:
-            sys.stderr.write("No name or id mentioned.")
-            return False
+        connect = Manager.get_connector(self)
+        cursor = connect.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM `{}` WHERE id_shoppinglist = {}".format(self.table, connect.escapte_string(id_shoppinglist)))
+        answ = cursor.fetchall()
+        if answ is not None:
+            ing_lst = []
+            id_s = answ[0][0]
+            for elt in answ:
+                ing_lst.append([elt[1], elt[2]])
+            return Purchase(id_s, ing_lst)
         else:
-            connect = Manager.get_connector(self)
-            cursor = connect.cursor(prepared=True)
-            if id is not None:
-                cursor.execute("SELECT * FROM `{}` WHERE id_ingredient = %s".format(self.table), (str(id),))
-            else:
-                cursor.execute("SELECT * FROM `{}` WHERE name_ingredient = %s".format(self.table), (name,))
-            answ = cursor.fetchall()
-            if answ is not None:
-                answ = answ[0]
-                return Ingredient(answ[0], answ[1])
-            else:
-                return None
+            return None
