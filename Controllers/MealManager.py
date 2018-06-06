@@ -1,6 +1,6 @@
-##########################################################################################
-# Manager class of Recipe which deals with recipes saving / loading / setting / deleting #
-##########################################################################################
+#####################################################################################
+# Manager class of Meal which deals with Meal saving / loading / setting / deleting #
+#####################################################################################
 from Manager import Manager
 from Models.Recipe import Recipe
 import mysql.connector as mariadb

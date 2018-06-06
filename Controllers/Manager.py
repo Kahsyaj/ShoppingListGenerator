@@ -110,11 +110,11 @@ class Manager:
             "CONSTRAINT Recipe_Ingredient0_FK FOREIGN KEY (id_ingredient) REFERENCES Ingredient(id_ingredient)) ENGINE=InnoDB")
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS ShoppingList (id_shoppinglist INT NOT NULL AUTO_INCREMENT, date_shoppinglist DATE, "
-            "quantity INT, deleted INT(1) DEFAULT 0, CONSTRAINT ShoppingList_PK PRIMARY KEY (id_shoppinglist)) ENGINE=InnoDB"
+            "deleted INT(1) DEFAULT 0, CONSTRAINT ShoppingList_PK PRIMARY KEY (id_shoppinglist)) ENGINE=InnoDB"
         )
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS Purchase ( id_shoppinglist INT NOT NULL, id_ingredient Int NOT NULL, "
-            "quantity INT NOT NULL, CONSTRAINT Purchase_PK PRIMARY KEY (id_shoppinglist, id_ingredient), "
+            "quantity INT NOT NULL, deleted INT(1) DEFAULT 0, CONSTRAINT Purchase_PK PRIMARY KEY (id_shoppinglist, id_ingredient), "
             "CONSTRAINT Purchase_Ingredient_FK FOREIGN KEY (id_ingredient) REFERENCES Ingredient(id_ingredient), "
             "CONSTRAINT Purchase_ShoppingList0_FK FOREIGN KEY (id_shoppinglist) REFERENCES ShoppingList(id_shoppinglist)) ENGINE=InnoDB"
         )

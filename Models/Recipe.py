@@ -1,13 +1,29 @@
 #################################################################################################
 # Class representing a recipe for a specific meal composed by ingredients and quantities (grams #
 #################################################################################################
+from Models.Ingredient import Ingredient
+
 
 
 class Recipe:
 
-    def __init__(self, id_meal, ingredients):
+    def __init__(self, id_meal="0", ingredients=[]):
         self.id_meal = id_meal
         self.ingredients = ingredients
+
+    def init(self, resp):
+        """
+            initialize a Recipe object from the result of a query (case when loading an object from db)
+            :param resp : the response to a select query returning the values to initialize the Purchase instance
+            :return : the current instance
+        """
+        if not resp:
+            raise ValueError('The result of the query is empty.')
+        self.id_meal = resp[0]['id_meal']
+        self.ingredients = []
+        for elt in resp:
+            self.ingredients.append(Ingredient().init([resp]), elt['quantity'])
+        return self
 
     # Getters and setters
     def get_id_meal(self):

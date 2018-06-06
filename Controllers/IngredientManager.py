@@ -4,6 +4,7 @@
 from Manager import Manager
 from Models.Ingredient import Ingredient
 import mysql.connector as mariadb
+import pymysql
 import sys
 
 
@@ -19,7 +20,7 @@ class IngredientManager(Manager):
             :param name : the name of the ingredient
             :return : the object ingredient corresponding to the one created in database if success else False
         """
-        connect = Manager.get_connector(self)
+        connect = self.get_connector()
         cursor = connect.cursor(prepared=True)
         cursor_id = connect.cursor()
         try:
@@ -36,6 +37,29 @@ class IngredientManager(Manager):
         connect.close()
         return Ingredient(id, name)
 
+    def db_create_from_obj(self, ingredient):
+        """
+            Create an ingredient in the database from a Ingredient object
+            :param ingredient : the Ingredient object to create in database
+            :return : True if success else False
+        """
+        if type(ingredient) is not Ingredient:
+            raise ValueError('The parameter must be an Ingredient instance.')
+        connect = self.get_connector()
+        cursor = connect.cursor(prepared=True)
+        try:
+            cursor.execute("INSERT INTO `{}` (id_ingredient, name_ingredient) VALUES (?, ?)"
+                           .format(self.table), (ingredient.get_id(), ingredient.get_name()))
+            connect.commit()
+            connect.close()
+        except mariadb.errors.IntegrityError:
+            sys.stderr.write("You may have a problem with the primary key.")
+            return False
+        except:
+            sys.stderr.write("An error occurred with the ingredient creating.")
+            return False
+        return True
+
     def db_delete(self, id=None, name=None):
         """
             Delete an ingredient by its name or its id from the database (soft delete)
@@ -48,7 +72,7 @@ class IngredientManager(Manager):
             return False
         else:
             try:
-                connect = Manager.get_connector(self)
+                connect = self.get_connector()
                 cursor = connect.cursor(prepared=True)
                 if id is not None:
                     cursor.execute("UPDATE `{}` SET deleted = 1 WHERE id_ingredient = %s".format(self.table), (id,))
@@ -68,7 +92,7 @@ class IngredientManager(Manager):
             :return : False an error occurred else True
         """
         try:
-            connect = Manager.get_connector(self)
+            connect = self.get_connector()
             cursor = connect.cursor()
             cursor.execute("UPDATE `{}` SET name = %s WHERE id = %s".format(self.table), (ingredient.get_name(), str(ingredient.get_id())))
             connect.commit()
@@ -89,15 +113,11 @@ class IngredientManager(Manager):
             sys.stderr.write("No name or id mentioned.")
             return False
         else:
-            connect = Manager.get_connector(self)
+            connect = self.get_connector()
             cursor = connect.cursor(dictionary=True)
             if id is not None:
-                cursor.execute("SELECT * FROM `{}` WHERE id_ingredient = {}".format(self.table, connect.escape_string(id)))
+                cursor.execute("SELECT * FROM `{}` WHERE id_ingredient = {}".format(self.table, pymysql.escape_string(str(id))))
             else:
-                cursor.execute("SELECT * FROM `{}` WHERE name_ingredient = {}".format(self.table, connect.escape_string(name)))
+                cursor.execute("SELECT * FROM `{}` WHERE name_ingredient = {}".format(self.table, pymysql.escape_string(name)))
             answ = cursor.fetchall()
-            if answ is not None:
-                answ = answ[0]
-                return Ingredient(answ['id_ingredient'], answ['name_ingredient'])
-            else:
-                return None
+            return Ingredient().init(answ)

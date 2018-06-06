@@ -2,20 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="107647ed-4681-42d8-bba8-c2776f300fd3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Controllers/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ingredient.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Ingredient.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IngredientManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/IngredientManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Meal.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Meal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Purchase.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Purchase.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PurchaseManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/PurchaseManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Recipe.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Recipe.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RecipeManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/RecipeManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShoppingList.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/ShoppingList.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShoppingListManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ShoppingListManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/IngredientManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/IngredientManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/Manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/PurchaseManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/PurchaseManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/RecipeManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/RecipeManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MealManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/MealManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Ingredient.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Ingredient.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Meal.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Meal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Purchase.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Purchase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Recipe.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Recipe.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,20 +26,8 @@
       <file leaf-file-name="Ingredient.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Models/Ingredient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="8" lean-forward="true" selection-start-line="25" selection-start-column="8" selection-end-line="27" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IngredientManager.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Controllers/IngredientManager.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="76" column="28" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
-              <folding>
-                <element signature="e#297#324#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="329">
+              <caret line="20" column="55" selection-start-line="20" selection-start-column="55" selection-end-line="20" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -50,19 +35,22 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="19" lean-forward="true" selection-start-column="19" selection-end-column="19" />
+            <state relative-caret-position="272">
+              <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#59#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Manager.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Controllers/Manager.py">
+      <file leaf-file-name="IngredientManager.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Controllers/IngredientManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-34">
-              <caret line="53" column="11" selection-start-line="53" selection-start-column="11" selection-end-line="53" selection-end-column="11" />
+            <state relative-caret-position="363">
+              <caret line="48" column="46" lean-forward="true" selection-start-line="48" selection-start-column="46" selection-end-line="48" selection-end-column="46" />
               <folding>
-                <element signature="e#243#256#0" expanded="true" />
+                <element signature="e#297#324#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -71,26 +59,8 @@
       <file leaf-file-name="Purchase.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Models/Purchase.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="601">
-              <caret line="80" column="8" selection-start-line="80" selection-start-column="8" selection-end-line="80" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Meal.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Models/Meal.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="33" column="12" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Recipe.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Models/Recipe.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="635">
-              <caret line="80" column="8" selection-start-line="80" selection-start-column="8" selection-end-line="80" selection-end-column="8" />
+            <state relative-caret-position="391">
+              <caret line="23" column="77" selection-start-line="23" selection-start-column="77" selection-end-line="23" selection-end-column="77" />
             </state>
           </provider>
         </entry>
@@ -98,8 +68,8 @@
       <file leaf-file-name="PurchaseManager.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Controllers/PurchaseManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="102" column="54" selection-start-line="102" selection-start-column="54" selection-end-line="102" selection-end-column="54" />
+            <state relative-caret-position="119">
+              <caret line="7" column="10" lean-forward="true" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
               <folding>
                 <element signature="e#285#312#0" expanded="true" />
               </folding>
@@ -107,11 +77,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RecipeManager.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Controllers/RecipeManager.py">
+      <file leaf-file-name="Meal.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Models/Meal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
+            <state relative-caret-position="391">
+              <caret line="23" column="41" lean-forward="true" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MealManager.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Controllers/MealManager.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="85" lean-forward="true" selection-start-column="85" selection-end-column="85" />
               <folding>
                 <element signature="e#273#300#0" expanded="true" />
               </folding>
@@ -119,11 +98,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ShoppingListManager.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Controllers/ShoppingListManager.py">
+      <file leaf-file-name="Recipe.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Models/Recipe.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+            <state relative-caret-position="459">
+              <caret line="27" column="25" lean-forward="true" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecipeManager.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Controllers/RecipeManager.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="652">
+              <caret line="110" column="34" lean-forward="true" selection-end-line="110" selection-end-column="34" />
+              <folding>
+                <element signature="e#273#300#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -157,15 +148,16 @@
         <option value="$PROJECT_DIR$/RecipeManager.py" />
         <option value="$PROJECT_DIR$/ShoppingListManager.py" />
         <option value="$PROJECT_DIR$/Controllers/ShoppingListManager.py" />
-        <option value="$PROJECT_DIR$/Controllers/RecipeManager.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/Controllers/Manager.py" />
-        <option value="$PROJECT_DIR$/Models/Purchase.py" />
-        <option value="$PROJECT_DIR$/Models/Ingredient.py" />
-        <option value="$PROJECT_DIR$/Models/Meal.py" />
-        <option value="$PROJECT_DIR$/Models/Recipe.py" />
-        <option value="$PROJECT_DIR$/Controllers/PurchaseManager.py" />
+        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/Controllers/IngredientManager.py" />
+        <option value="$PROJECT_DIR$/Controllers/PurchaseManager.py" />
+        <option value="$PROJECT_DIR$/Controllers/RecipeManager.py" />
+        <option value="$PROJECT_DIR$/Models/Meal.py" />
+        <option value="$PROJECT_DIR$/Models/Ingredient.py" />
+        <option value="$PROJECT_DIR$/Models/Purchase.py" />
+        <option value="$PROJECT_DIR$/Models/Recipe.py" />
+        <option value="$PROJECT_DIR$/Controllers/MealManager.py" />
       </list>
     </option>
   </component>
@@ -192,7 +184,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -205,10 +196,16 @@
               <item name="ShoppingListGenerator" type="462c0819:PsiDirectoryNode" />
               <item name="Controllers" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ShoppingListGenerator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShoppingListGenerator" type="462c0819:PsiDirectoryNode" />
+              <item name="Models" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -275,7 +272,21 @@
       <option name="project" value="LOCAL" />
       <updated>1528193389650</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Updated docstring and started Manager's methods">
+      <created>1528209635547</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1528209635547</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Refactoring db_load() methods">
+      <created>1528212956337</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1528212956337</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -317,26 +328,11 @@
     <MESSAGE value="updated database mode for Manager class (unfinished yet)" />
     <MESSAGE value="db_init created, some improvements on attributes" />
     <MESSAGE value="Adding DAO (Manager classes of the base models)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding DAO (Manager classes of the base models)" />
+    <MESSAGE value="Updated docstring and started Manager's methods" />
+    <MESSAGE value="Refactoring db_load() methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring db_load() methods" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Controllers/IngredientManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
-          <folding>
-            <element signature="e#297#324#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Models/Ingredient.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Controllers/IngredientManager.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -621,6 +617,9 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ShoppingListGenerator.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/Models/ShoppingList.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -630,82 +629,95 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Controllers/ShoppingListManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="19" lean-forward="true" selection-start-column="19" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Models/Purchase.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="601">
-          <caret line="80" column="8" selection-start-line="80" selection-start-column="8" selection-end-line="80" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Models/Ingredient.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="8" lean-forward="true" selection-start-line="25" selection-start-column="8" selection-end-line="27" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Models/Meal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="12" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Models/Recipe.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="635">
-          <caret line="80" column="8" selection-start-line="80" selection-start-column="8" selection-end-line="80" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Controllers/RecipeManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
-          <folding>
-            <element signature="e#273#300#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="51">
+          <caret line="3" column="27" lean-forward="true" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Controllers/Manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-34">
-          <caret line="53" column="11" selection-start-line="53" selection-start-column="11" selection-end-line="53" selection-end-column="11" />
+        <state relative-caret-position="346">
+          <caret line="112" column="13" selection-start-line="112" selection-start-column="13" selection-end-line="112" selection-end-column="13" />
           <folding>
             <element signature="e#243#256#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Controllers/PurchaseManager.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="102" column="54" selection-start-line="102" selection-start-column="54" selection-end-line="102" selection-end-column="54" />
+        <state relative-caret-position="272">
+          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
           <folding>
-            <element signature="e#285#312#0" expanded="true" />
+            <element signature="e#0#59#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Controllers/IngredientManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="76" column="28" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
+        <state relative-caret-position="363">
+          <caret line="48" column="46" lean-forward="true" selection-start-line="48" selection-start-column="46" selection-end-line="48" selection-end-column="46" />
           <folding>
             <element signature="e#297#324#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Purchase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="77" selection-start-line="23" selection-start-column="77" selection-end-line="23" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Ingredient.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="20" column="55" selection-start-line="20" selection-start-column="55" selection-end-line="20" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Meal.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="41" lean-forward="true" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controllers/PurchaseManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="10" lean-forward="true" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
+          <folding>
+            <element signature="e#285#312#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controllers/RecipeManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="652">
+          <caret line="110" column="34" lean-forward="true" selection-end-line="110" selection-end-column="34" />
+          <folding>
+            <element signature="e#273#300#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Recipe.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="25" lean-forward="true" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controllers/MealManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="85" lean-forward="true" selection-start-column="85" selection-end-column="85" />
+          <folding>
+            <element signature="e#273#300#0" expanded="true" />
           </folding>
         </state>
       </provider>

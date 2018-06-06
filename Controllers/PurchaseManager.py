@@ -4,6 +4,7 @@
 from Manager import Manager
 from Models.Purchase import Purchase
 import mysql.connector as mariadb
+import pymysql
 import sys
 
 
@@ -16,11 +17,11 @@ class PurchaseManager(Manager):
     def db_create(self, id_shoppinglist, *ingredients):
         """
             Create a purchase in the database from an id_shoppinglist and a list of [Ingredient, quantity]
-            :param id_shoppinglist : the id of the associated shoppinglist
+            :param id_shoppinglist : the id of the associated ShoppingList
             :param ingredients : the double list of [Ingredient, quantity] of the purchase
             :return : True if the purchase has been successfully created else, False
         """
-        connect = Manager.get_connector(self)
+        connect = self.get_connector()
         cursor = connect.cursor(prepared=True)
         try:
             for ingredient in ingredients:
@@ -36,13 +37,15 @@ class PurchaseManager(Manager):
             return False
         return True
 
-    def db_create(self, purchase):
+    def db_create_from_obj(self, purchase):
         """
             Create a purchase in the database from a Purchase object
             :param purchase : the Purchase object to create in database
             :return : True if success else False
         """
-        connect = Manager.get_connector(self)
+        if type(purchase) is not Purchase:
+            raise ValueError('The parameter must be a Purchase instance.')
+        connect = self.get_connector()
         cursor = connect.cursor(prepared=True)
         try:
             for ingredient in purchase.get_ingredients():
@@ -65,7 +68,7 @@ class PurchaseManager(Manager):
             :return : False an error occurred else True
         """
         try:
-            connect = Manager.get_connector(self)
+            connect = self.get_connector()
             cursor = connect.cursor(prepared=True)
             cursor.execute("UPDATE `{}` SET deleted = 1 WHERE id_shoppinglist = %s".format(self.table), (id_shoppinglist,))
             connect.commit()
@@ -82,7 +85,7 @@ class PurchaseManager(Manager):
             :return : True if success, otherwise False
         """
         try:
-            connect = Manager.get_connector(self)
+            connect = self.get_connector()
             cursor = connect.cursor()
             for ingredient in purchase.get_ingredients():
                 cursor.execute("UPDATE `{}` SET id_ingredient = %s, quantity = %s WHERE id_shoppinglist = %s".format(self.table),
@@ -97,18 +100,13 @@ class PurchaseManager(Manager):
     def db_load(self, id_shoppinglist):
         """
             From an id_shoppinglist, load a Purchase object from the database
-            :param id_shoppinglist : the id of the purchase to load
+            :param id_shoppinglist : the id associated to the purchase to load
             :return : the Purchase object loaded, None if not in database
         """
-        connect = Manager.get_connector(self)
+        connect = self.get_connector()
         cursor = connect.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM `{}` WHERE id_shoppinglist = {}".format(self.table, connect.escapte_string(id_shoppinglist)))
+        cursor.execute("SELECT * FROM `{}` INNER JOIN Ingredient ON Ingredient.id_ingredient = "
+                       "Purchase.id_ingredient WHERE id_shoppinglist = {}".format(self.table, pymysql.escape_string(str(id_shoppinglist))))
         answ = cursor.fetchall()
-        if answ is not None:
-            ing_lst = []
-            id_s = answ[0][0]
-            for elt in answ:
-                ing_lst.append([elt[1], elt[2]])
-            return Purchase(id_s, ing_lst)
-        else:
-            return None
+        return Purchase().init(answ)
+
