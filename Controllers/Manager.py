@@ -120,11 +120,12 @@ class Manager:
         )
         connector.close()
 
-    """
-    Returns a mariadb connector to execute queries
-    :return connector : the mariadb cursor
-    """
     def get_connector(self):
+
+        """
+            Returns a mariadb connector to execute queries
+            :return connector : the mariadb cursor
+        """
         try:
             connector = mariadb.connect(user=self.user, password=self.password, database=self.database)
         except mariadb.errors.ProgrammingError:

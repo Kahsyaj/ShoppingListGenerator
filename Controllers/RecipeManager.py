@@ -14,7 +14,7 @@ class RecipeManager(Manager):
         self.table = "Recipe"
         Manager.__init__(self, self.table, usr, psswd)
 
-    def db_create(self, id_meal, *ingredients):
+    def db_create(self, id_meal, ingredients):
         """
             Create a purchase in the database from an id_shoppinglist and a list of [Ingredient, quantity]
             :param id_meal : the id of the associated Meal
@@ -43,8 +43,7 @@ class RecipeManager(Manager):
             :param recipe : the Recipe object to create in database
             :return : True if success else False
         """
-        if type(recipe) is not Recipe:
-            raise ValueError('The parameter should be a Recipe instance.')
+        self.check_managed(recipe)
         connect = self.get_connector()
         cursor = connect.cursor(prepared=True)
         try:
@@ -84,6 +83,7 @@ class RecipeManager(Manager):
             :param recipe : the object to save
             :return : True if success, otherwise False
         """
+        self.check_managed(recipe)
         try:
             connect = self.get_connector()
             cursor = connect.cursor()
@@ -105,7 +105,17 @@ class RecipeManager(Manager):
         """
         connect = Manager.get_connector(self)
         cursor = connect.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM `{}` INNER JOIN Ingredient ON Ingredient.id_ingredient = "
-                       "Purchase.id_ingredient WHERE id_shoppinglist = {}".format(self.table, pymysql.escape_string(str(id_meal))))
+        cursor.execute("SELECT Recipe.id_meal, Recipe.id_ingredient, Ingredient.name_ingredient, Recipe.quantity "
+                       "FROM `{}` INNER JOIN Ingredient ON Ingredient.id_ingredient = Recipe.id_ingredient WHERE "
+                       "id_shoppinglist = {} AND Recipe.deleted = 0".format(self.table, pymysql.escape_string(str(id_meal))))
         answ = cursor.fetchall()
         return Recipe().init(answ)
+
+    @staticmethod
+    def check_managed(item):
+        """
+            Check if the parameter is from the type of the managed item, if not raise ValueError
+            :param item : the item to verify
+        """
+        if type(item) is not Recipe:
+            raise ValueError('The parameter must be a Recipe instance.')

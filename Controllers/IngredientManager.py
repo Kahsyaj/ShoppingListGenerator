@@ -27,7 +27,7 @@ class IngredientManager(Manager):
             cursor.execute("INSERT INTO `{}` (name_ingredient) VALUES (?)".format(self.table), (name,))
             connect.commit()
         except mariadb.errors.IntegrityError:
-            sys.stderr.write("The ingredient name \"{}\" already exists.".format(name))
+            sys.stderr.write("The ingredient name \"{}\" may already exists.".format(name))
             return False
         except:
             sys.stderr.write("An error occurred with the ingredient creating.")
@@ -43,8 +43,7 @@ class IngredientManager(Manager):
             :param ingredient : the Ingredient object to create in database
             :return : True if success else False
         """
-        if type(ingredient) is not Ingredient:
-            raise ValueError('The parameter must be an Ingredient instance.')
+        self.check_managed(ingredient)
         connect = self.get_connector()
         cursor = connect.cursor(prepared=True)
         try:
@@ -91,10 +90,11 @@ class IngredientManager(Manager):
             :param ingredient : the object to save
             :return : False an error occurred else True
         """
+        self.check_managed(ingredient)
         try:
             connect = self.get_connector()
             cursor = connect.cursor()
-            cursor.execute("UPDATE `{}` SET name = %s WHERE id = %s".format(self.table), (ingredient.get_name(), str(ingredient.get_id())))
+            cursor.execute("UPDATE `{}` SET name_ingredient = %s WHERE id_ingredient = %s".format(self.table), (ingredient.get_name(), str(ingredient.get_id())))
             connect.commit()
             connect.close()
         except:
@@ -116,8 +116,19 @@ class IngredientManager(Manager):
             connect = self.get_connector()
             cursor = connect.cursor(dictionary=True)
             if id is not None:
-                cursor.execute("SELECT * FROM `{}` WHERE id_ingredient = {}".format(self.table, pymysql.escape_string(str(id))))
+                cursor.execute("SELECT id_ingredient, name_ingredient FROM `{}` WHERE Ingredient.id_ingredient = {} "
+                               "AND Ingredient.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
             else:
-                cursor.execute("SELECT * FROM `{}` WHERE name_ingredient = {}".format(self.table, pymysql.escape_string(name)))
+                cursor.execute("SELECT id_ingredient, name_ingredient FROM `{}` WHERE Ingredient.name_ingredient = {} "
+                               "AND Ingredient.deleted = 0".format(self.table, pymysql.escape_string(name)))
             answ = cursor.fetchall()
             return Ingredient().init(answ)
+
+    @staticmethod
+    def check_managed(item):
+        """
+            Check if the parameter is from the type of the managed item, if not raise ValueError
+            :param item : the item to verify
+        """
+        if type(item) is not Ingredient:
+            raise ValueError('The parameter must be an Ingredient instance.')
