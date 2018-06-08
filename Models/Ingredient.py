@@ -12,7 +12,7 @@ class Ingredient:
     def init(self, resp):
         """
             initialize an Ingredient object from the result of a query (case when loading an object from db)
-            :param resp : the response to a select query returning the values to initialize the Ingredient instance
+            :paramresp : the response to a select query returning the values to initialize the Ingredient instance
             :return : the current instance
         """
         if not resp:

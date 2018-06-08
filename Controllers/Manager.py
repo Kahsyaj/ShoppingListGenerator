@@ -8,7 +8,6 @@ import mysql.connector as mariadb
 
 
 class Manager:
-
     def __init__(self, folder, usr="root", psswd="root"):
         self.folder = "../Save/{}/".format(folder)
         self.ext = ".bak"
@@ -65,7 +64,7 @@ class Manager:
     def file_save(self, obj):
         """
             Save an object (Serialize) into a file (name given with gen_file_name_from_obj()
-            :param : obj : the object to save
+            :param obj : the object to save
         """
         with open(self.folder + self.gen_file_name_from_obj(obj), "wb") as f:
             pickle.dump(obj, f)
@@ -74,7 +73,7 @@ class Manager:
         """
             From a file name, load the associated object and returns it
             :param file_name : the name of the file to load
-            :return : the object loaded
+            :return: the object loaded
         """
         with open(self.folder + file_name, "rb") as f:
             return pickle.load(f)
@@ -82,7 +81,7 @@ class Manager:
     def files_load(self):
         """
             Load all the objects from the dest directory into a dict and returns it
-            :return objs : the dictionary containing the objects loaded
+            :return: objs : the dictionary containing the objects loaded
         """
         objs = dict()
         for file in os.listdir(self.folder):
@@ -124,7 +123,7 @@ class Manager:
 
         """
             Returns a mariadb connector to execute queries
-            :return connector : the mariadb cursor
+            :return: connector : the mariadb cursor
         """
         try:
             connector = mariadb.connect(user=self.user, password=self.password, database=self.database)

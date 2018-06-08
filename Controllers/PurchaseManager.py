@@ -19,7 +19,7 @@ class PurchaseManager(Manager):
             Create a purchase in the database from an id_shoppinglist and a list of [Ingredient, quantity]
             :param id : the id of the associated ShoppingList
             :param ingredients : the double list of [Ingredient, quantity] of the purchase
-            :return : True if the purchase has been successfully created else, False
+            :return: True if the purchase has been successfully created else, False
         """
         connect = self.get_connector()
         cursor = connect.cursor(prepared=True)
@@ -41,7 +41,7 @@ class PurchaseManager(Manager):
         """
             Create a purchase in the database from a Purchase object
             :param purchase : the Purchase object to create in database
-            :return : True if success else False
+            :return: True if success else False
         """
         self.check_managed(purchase)
         connect = self.get_connector()
@@ -64,7 +64,7 @@ class PurchaseManager(Manager):
         """
             Delete a purchase by its id_shoppinglist from the database (soft delete)
             :param  id_shoppinglist : the id of the Purchase to delete
-            :return : False an error occurred else True
+            :return: False an error occurred else True
         """
         try:
             connect = self.get_connector()
@@ -81,7 +81,7 @@ class PurchaseManager(Manager):
         """
             Save a Purchase object into database
             :param purchase : the object to save
-            :return : True if success, otherwise False
+            :return: True if success, otherwise False
         """
         self.check_managed(purchase)
         try:
@@ -101,7 +101,7 @@ class PurchaseManager(Manager):
         """
             From an id_shoppinglist, load a Purchase object from the database
             :param id : the id associated to the purchase to load
-            :return : the Purchase object loaded, None if not in database
+            :return: the Purchase object loaded, None if not in database
         """
         connect = self.get_connector()
         cursor = connect.cursor(dictionary=True)

@@ -15,7 +15,7 @@ class Meal:
         """
             initialize a Meal object from the result of a query (case when loading an object from db)
             :param resp : the response to a select query returning the values to initialize the Purchase instance
-            :return : the current instance
+            :return: the current instance
         """
         if not resp:
             raise ValueError('The result of the query is empty.')

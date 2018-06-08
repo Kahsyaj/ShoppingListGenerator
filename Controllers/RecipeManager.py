@@ -17,8 +17,8 @@ class RecipeManager(Manager):
     def db_create(self, id_meal, ingredients):
         """
             Create a purchase in the database from an id_shoppinglist and a list of [Ingredient, quantity]
-            :param id_meal : the id of the associated Meal
-            :param ingredients : the double list of [Ingredient, quantity] of the recipe
+            :paramid_meal : the id of the associated Meal
+            :paramingredients : the double list of [Ingredient, quantity] of the recipe
             :return : True if the recipe has been successfully created else, False
         """
         connect = self.get_connector()
@@ -40,7 +40,7 @@ class RecipeManager(Manager):
     def db_create_from_obj(self, recipe):
         """
             Create a recipe in the database from a Recipe object
-            :param recipe : the Recipe object to create in database
+            :paramrecipe : the Recipe object to create in database
             :return : True if success else False
         """
         self.check_managed(recipe)
@@ -63,7 +63,7 @@ class RecipeManager(Manager):
     def db_delete(self, id_meal):
         """
             Delete a recipe by its id_meal from the database (soft delete)
-            :param  id_meal : the id of the Recipe to delete
+            :param id_meal : the id of the Recipe to delete
             :return : False an error occurred else True
         """
         try:
@@ -80,7 +80,7 @@ class RecipeManager(Manager):
     def db_save(self, recipe):
         """
             Save a Recipe object into database
-            :param recipe : the object to save
+            :paramrecipe : the object to save
             :return : True if success, otherwise False
         """
         self.check_managed(recipe)
@@ -100,7 +100,7 @@ class RecipeManager(Manager):
     def db_load(self, id_meal):
         """
             From an id_meal, load a Recipe object from the database
-            :param id_meal : the id associated to the recipe to load
+            :paramid_meal : the id associated to the recipe to load
             :return : the Recipe object loaded, None if not in database
         """
         connect = Manager.get_connector(self)
@@ -115,7 +115,7 @@ class RecipeManager(Manager):
     def check_managed(item):
         """
             Check if the parameter is from the type of the managed item, if not raise ValueError
-            :param item : the item to verify
+            :paramitem : the item to verify
         """
         if type(item) is not Recipe:
             raise ValueError('The parameter must be a Recipe instance.')

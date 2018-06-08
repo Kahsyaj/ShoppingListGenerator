@@ -18,7 +18,7 @@ class IngredientManager(Manager):
         """
             Create an ingredient in the database and get the max id to instanciate the associated object and returns it
             :param name : the name of the ingredient
-            :return : the object ingredient corresponding to the one created in database if success else False
+            :return: the object ingredient corresponding to the one created in database if success else False
         """
         connect = self.get_connector()
         cursor = connect.cursor(prepared=True)
@@ -41,7 +41,7 @@ class IngredientManager(Manager):
         """
             Create an ingredient in the database from a Ingredient object
             :param ingredient : the Ingredient object to create in database
-            :return : True if success else False
+            :return: True if success else False
         """
         self.check_managed(ingredient)
         connect = self.get_connector()
@@ -64,7 +64,7 @@ class IngredientManager(Manager):
             Delete an ingredient by its name or its id from the database (soft delete)
             :param ? id : the id of the ingredient to delete
             :param ? name : the name of the ingredient to delete
-            :return : False if no parameters given or if an error occurs else True
+            :return: False if no parameters given or if an error occurs else True
         """
         if name is None and id is None:
             sys.stderr.write("No name or id mentioned.")
@@ -88,7 +88,7 @@ class IngredientManager(Manager):
         """
             Save an Ingredient object into database
             :param ingredient : the object to save
-            :return : False an error occurred else True
+            :return: False an error occurred else True
         """
         self.check_managed(ingredient)
         try:
@@ -107,7 +107,7 @@ class IngredientManager(Manager):
             From an id or a name, load an Ingredient object from the database
             :param id : the id of the ingredient to load
             :param name : the name of the ingredient to load
-            :return : the Ingredient object loaded, None if not in database
+            :return: the Ingredient object loaded, None if not in database
         """
         if name is None and id is None:
             sys.stderr.write("No name or id mentioned.")

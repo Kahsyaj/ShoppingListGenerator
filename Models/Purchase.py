@@ -14,7 +14,7 @@ class Purchase:
         """
             initialize a Purchase object from the result of a query (case when loading an object from db)
             :param resp : the response to a select query returning the values to initialize the Purchase instance
-            :return : the current instance
+            :return: the current instance
         """
         if not resp:
             raise ValueError('The result of the query is empty.')
@@ -41,7 +41,7 @@ class Purchase:
         """
             Return True if the ingredient is already in the recipe, else False
             :param ingredient_name : the name of the ingredient to check
-            :return : True if the ingredient is in the purchase else False
+            :return: True if the ingredient is in the purchase else False
         """
         answ = True
         for elt in self.ingredients:
@@ -55,7 +55,7 @@ class Purchase:
             Add an ingredient to the purchase
             :param ingredient : the ingredient to add
             :param qty : the quantity of the ingredient expressed in grams
-            :return : True if success else False
+            :return: True if success else False
         """
         done = False
         if not self.in_purchase(ingredient.get_name):
@@ -67,7 +67,7 @@ class Purchase:
         """
             Remove an ingredient from the purchase
             :param ingredient_name : the name of the ingredient to remove
-            :return True if success else False
+            :return: True if success else False
         """
         if not self.in_purchase(ingredient_name):
             return False
@@ -81,7 +81,7 @@ class Purchase:
             Set the quantity of one ingredient from the purchase
             :param ingredient_name : the name of the ingredient to set
             :param new_qty : the new quantity to define
-            :return : True if success else False
+            :return: True if success else False
         """
         if not self.in_purchase(ingredient_name):
             return False

@@ -19,7 +19,7 @@ class ShoppingListManager(Manager):
         """
             Create a ShoppingList in the database from a date
             :param date : the date of the shopping list
-            :return : the ShoppingList object if successfully created else, False
+            :return: the ShoppingList object if successfully created else, False
         """
         connect = self.get_connector()
         cursor = connect.cursor(prepared=True)
@@ -42,7 +42,7 @@ class ShoppingListManager(Manager):
         """
             Create a purchase in the database from a Purchase object
             :param shoppinglist : the ShoppingLIst object to create in database
-            :return : True if success else False
+            :return: True if success else False
         """
         self.check_managed(shoppinglist)
         connect = self.get_connector()
@@ -64,7 +64,7 @@ class ShoppingListManager(Manager):
         """
             Delete a shopping list by its id from the database (soft delete)
             :param  id_shoppinglist : the id of the Purchase to delete
-            :return : False an error occurred else True
+            :return: False an error occurred else True
         """
         try:
             connect = self.get_connector()
@@ -81,7 +81,7 @@ class ShoppingListManager(Manager):
         """
             Save a Purchase object into database
             :param shoppinglist : the object to save
-            :return : True if success, otherwise False
+            :return: True if success, otherwise False
         """
         self.check_managed(shoppinglist)
         try:
@@ -100,7 +100,7 @@ class ShoppingListManager(Manager):
         """
             From an id_shoppinglist, load a ShoppingList object from the database
             :param id : the id of the shopping list to load
-            :return : the ShoppingList object loaded, None if not in database
+            :return: the ShoppingList object loaded, None if not in database
         """
         connect = self.get_connector()
         cursor = connect.cursor(dictionary=True)

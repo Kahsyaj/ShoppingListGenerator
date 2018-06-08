@@ -1,6 +1,6 @@
-######################################################################################################
+############################################################################################
 # Class representing a shoppingList containing the purchases needed  a number of Meals set #
-######################################################################################################
+############################################################################################
 from Purchase import Purchase
 from datetime import date
 
@@ -16,7 +16,7 @@ class ShoppingList:
         """
             initialize a ShoppingList object from the result of a query (case when loading an object from db)
             :param resp : the response to a select query returning the values to initialize the ShoppingList instance
-            :return : the current instance
+            :return: the current instance
         """
         if not resp:
             raise ValueError('The result of the query is empty.')

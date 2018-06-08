@@ -18,7 +18,7 @@ class MealManager(Manager):
         """
             Create a meal in the database from a name
             :param name : the name of the meal
-            :return : the Meal object if successfully created else, False
+            :return: the Meal object if successfully created else, False
         """
         connect = self.get_connector()
         cursor = connect.cursor(prepared=True)
@@ -40,8 +40,8 @@ class MealManager(Manager):
     def db_create_from_obj(self, meal):
         """
             Create a recipe in the database from a Recipe object
-            :param recipe : the Recipe object to create in database
-            :return : True if success else False
+            :param meal : the Recipe object to create in database
+            :return: True if success else False
         """
         self.check_managed(meal)
         connect = self.get_connector()
@@ -64,7 +64,7 @@ class MealManager(Manager):
             Delete a meal by its name or its id from the database (soft delete)
             :param ? id : the id of the meal to delete
             :param ? name : the name of the meal to delete
-            :return : False if no parameters given or if an error occurs else True
+            :return: False if no parameters given or if an error occurs else True
         """
         if name is None and id is None:
             sys.stderr.write("No name or id mentioned.")
@@ -88,7 +88,7 @@ class MealManager(Manager):
         """
             Save a Meal object into database
             :param meal : the object to save
-            :return : False an error occurred else True
+            :return: False an error occurred else True
         """
         self.check_managed(meal)
         try:
@@ -107,7 +107,7 @@ class MealManager(Manager):
             From an id or a name, load a Meal object from the database
             :param id : the id of the meal to load
             :param name : the name of the meal to load
-            :return : the Meal object loaded, None if not in database
+            :return: the Meal object loaded, None if not in database
         """
         if name is None and id is None:
             sys.stderr.write("No name or id mentioned.")
