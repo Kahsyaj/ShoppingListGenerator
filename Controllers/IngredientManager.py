@@ -22,7 +22,6 @@ class IngredientManager(Manager):
         """
         connect = self.get_connector()
         cursor = connect.cursor(prepared=True)
-        cursor_id = connect.cursor()
         try:
             cursor.execute("INSERT INTO `{}` (name_ingredient) VALUES (?)".format(self.table), (name,))
             connect.commit()
@@ -32,8 +31,7 @@ class IngredientManager(Manager):
         except:
             sys.stderr.write("An error occurred with the ingredient creating.")
             return False
-        cursor_id.execute("SELECT MAX(id_ingredient) FROM `{}`".format(self.table))
-        id = cursor_id.fetchall()[0][0]
+        id = self.get_current_id()
         connect.close()
         return Ingredient(id, name)
 
@@ -123,6 +121,18 @@ class IngredientManager(Manager):
                                "AND Ingredient.deleted = 0".format(self.table, pymysql.escape_string(name)))
             answ = cursor.fetchall()
             return Ingredient().init(answ)
+
+    def get_current_id(self):
+        """
+            Returns the current id, usefull to create associated objects in conformity with the database values
+            and constraints
+            :return: the current assignable id
+        """
+        connect = self.get_connector()
+        cursor = connect.cursor()
+        cursor.execute('SELECT MAX(id_ingredient) FROM {}'.format(self.table))
+        connect.close()
+        return int(cursor.fetchall()[0][0]) + 1
 
     @staticmethod
     def check_managed(item):

@@ -23,7 +23,6 @@ class ShoppingListManager(Manager):
         """
         connect = self.get_connector()
         cursor = connect.cursor(prepared=True)
-        cursor_id = connect.cursor()
         try:
             cursor.execute("INSERT INTO `{}` (date_shoppinglist) VALUES (?)".format(self.table), (date,))
             connect.commit()
@@ -33,8 +32,7 @@ class ShoppingListManager(Manager):
         except:
             sys.stderr.write("An error occurred with the purchase creating.")
             return False
-        cursor_id.execute("SELECT MAX(id_shoppinglist) FROM `{}`".format(self.table))
-        id = cursor_id.fetchall()[0][0]
+        id = self.get_current_id()
         connect.close()
         return ShoppingList(id, date)
 
@@ -111,6 +109,18 @@ class ShoppingListManager(Manager):
                        "AND ShoppingList.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
         answ = cursor.fetchall()
         return ShoppingList().init(answ)
+
+    def get_current_id(self):
+        """
+            Returns the current id, usefull to create associated objects in conformity with the database values
+            and constraints
+            :return: the current assignable id
+        """
+        connect = self.get_connector()
+        cursor = connect.cursor()
+        cursor.execute('SELECT MAX(id_shoppinglist) FROM {}'.format(self.table))
+        connect.close()
+        return int(cursor.fetchall()[0][0]) + 1
 
     @classmethod
     def check_managed(item):

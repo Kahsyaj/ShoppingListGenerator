@@ -1,77 +1,96 @@
 ##############################################################################
 # Class representing the menu where the user can choose actions to do (CRUD) #
 ##############################################################################
+from Controllers.MenuController import MenuController
 
 
 class Menu:
     def __init__(self):
         self.categories = ['Ingredient', 'Meal', 'Shopping list']
         self.options = ['Create', 'Set', 'Delete', 'Display']
+        self.choices = {}
+        self.inputs = [{}]
+        self.controller = MenuController()
 
     @staticmethod
     def welcome():
         print('Welcome to the ShoppingListGenerator.\nThis software allows you to manage ingredients and meals to generate'
               'randomly a shopping list for the number of days wished.')
 
-    def ask_action(self):
+    def ask_choices(self):
         """
-            Depending on the Menu attributes, display the menu and ask the user what actions to do and returns it
-            :return: cat_choice, act_choice : the index of the category and the action the user want to do
+            Depending on the Menu attributes, display the menu and ask the user what actions to do and add it to the 
+            choices for future actions
         """
-        cat_choice, act_choice = -1
-        while not self.in_scope(cat=cat_choice):
+        self.choices = {}
+        while not self.in_scope():
             print('Which category would you like to browse ?')
             for category in self.categories:
                 print('{}) - {}'.format(str(self.categories.index(category)), category))
             cat_choice = int(raw_input('Choose the category : '))
-            print('You have chosen the {} category'.format(self.categories[cat_choice].lower()) if self.in_scope(cat=cat_choice)
+            print('You have chosen the {} category'.format(self.categories[cat_choice].lower()) if self.in_scope()
                   else 'The option {} is not available.'.format(str(cat_choice)))
-        while not self.in_scope(act=act_choice):
+        while not self.in_scope():
             print('Which action would you like to do ?')
             for action in self.options:
                 print('{}) - {}'.format(str(self.options.index(action)), action))
-                act_choice = int(raw_input('Choose the action : '))
-                print('You want to {}'.format(self.options[act_choice].lower()) if self.in_scope(act=act_choice)
-                      else 'The option {} is not available.'.format(str(act_choice)))
-        return cat_choice, act_choice
+                opt_choice = int(raw_input('Choose the action : '))
+                print('You want to {}'.format(self.options[opt_choice].lower()) if self.in_scope()
+                      else 'The option {} is not available.'.format(str(opt_choice)))
+        self.choices['category'] = cat_choice
+        self.choices['option'] = opt_choice
 
-    def ask_action_target(self, cat, act):
+    def ask_inputs(self):
         """
-            From an index of a category and an index of an action, asks the information concerning the target to the user
-            if action = Display, no inputs needed
-            :param cat: the index of the category in which operate
-            :param act: the index of the action to do
-            :return: inputs : the information concerning the category and the action to proceed and the inputs from the user
+            From an index of a category and an index of an option, asks the information concerning the target to the
+            user and add it to the inputs if action = Display, no input needed => return
         """
-        inputs = {'action': (cat, act)}
-        if not self.in_scope(cat, act):
+        self.inputs = [{}]
+        if not self.in_scope():
             raise ValueError('The category or the action number is not valid.')
-        if self.options[act] == 'Display':
-            return inputs
-        action = self.options[cat][act].lower()
-        if cat == 0:
-            prefix_str = 'Name of the ingredient to {} :'
-            inputs['name_ingredient'] = raw_input(prefix_str.format(action))
-        elif cat == 1:
-            prefix_str = 'Name of the meal to {} :'
-            inputs['name_meal'] = raw_input(prefix_str.format(action))
-        elif cat == 2:
-            prefix_str = 'Id of the shopping list to {}'
-            inputs['id_shoppinglist'] = raw_input(prefix_str.format(action))
-        return inputs
+        if self.choices['option'] == 3:
+            return
+        action = self.options[self.choices['option']].lower()
+        if self.choices['category'] == 0:
+            prefix_str = 'Name of the ingredient to {} : '
+            self.inputs[0]['name_ingredient'] = raw_input(prefix_str.format(action))
+        elif self.choices['category'] == 1:
+            prefix_str = 'Name of the meal to {} : '
+            self.inputs[0]['name_meal'] = raw_input(prefix_str.format(action))
+        elif self.choices['category'] == 2:
+            prefix_str = 'Id of the shopping list to {} : '
+            self.inputs[0]['id_shoppinglist'] = raw_input(prefix_str.format(action))
+    
+    def ask_meal_adding(self):
 
-    def in_scope(self, cat=None, act=None):
+        print('Press !c plus enter at any time to cancel current adding.\nPress !x plus enter at any time '
+              'to stop adding ingredients')
+        name_ingredient = ''
+        quantity = 0
+        while name_ingredient != '!x' and quantity != '!x':
+            name_ingredient = raw_input('Name of the ingredient : ')
+            if name_ingredient == '!c':
+                continue
+            elif name_ingredient == '!x':
+                break
+            quantity = int(raw_input('Quantity : '))
+            if quantity == '!c':
+                continue
+            elif quantity == '!x':
+                break
+            self.inputs.append({'name_ingredient': name_ingredient, 'quantity': quantity})
+            print('Successfully added.')
+
+    def in_scope(self):
         """
-            Return depending on the fact that indexes in parameters are in bounds or not
-            :param ? cat : the index of the category
-            :param ? act : the index of the action
-            :return: True if the index of cat or act or both are not out of bounds else False
+            Return depending on the fact that the category and option are in bounds or not
+            :return: True if the index of the category or option or both are not out of bounds else False
         """
-        if cat is not None and act is not None:
-            return 0 <= cat < len(self.categories) and 0 < act < len(self.options)
-        elif cat is not None:
-            return 0 <= cat < len(self.categories)
-        elif act is not None:
-            return 0 <= act < len(self.options)
+        if self.choices['category'] is not None and self.choices['option'] is not None:
+            return 0 <= self.choices['category'] < len(self.categories) and 0 < self.choices['option'] < len(self.options)
+        elif self.choices['category'] is not None:
+            return 0 <= self.choices['category'] < len(self.categories)
+        elif self.choices['option'] is not None:
+            return 0 <= self.choices['option'] < len(self.options)
         else:
-            raise ValueError('You must at least give a category or an action number in parameter.')
+            return False

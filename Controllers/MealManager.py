@@ -22,7 +22,6 @@ class MealManager(Manager):
         """
         connect = self.get_connector()
         cursor = connect.cursor(prepared=True)
-        cursor_id = connect.cursor()
         try:
             cursor.execute("INSERT INTO `{}` (name_meal) VALUES (?)".format(self.table), (name,))
             connect.commit()
@@ -32,8 +31,7 @@ class MealManager(Manager):
         except:
             sys.stderr.write("An error occurred with the meal creating.")
             return False
-        cursor_id.execute("SELECT MAX(id_meal) FROM `{}`".format(self.table))
-        id = cursor_id.fetchall()[0][0]
+        id = self.get_current_id()
         connect.close()
         return Meal(id, name)
 
@@ -127,6 +125,18 @@ class MealManager(Manager):
                                "AND Recipe.deleted = 0".format(self.table, pymysql.escape_string(name)))
             answ = cursor.fetchall()
             return Meal().init(answ)
+
+    def get_current_id(self):
+        """
+            Returns the current id, usefull to create associated objects in conformity with the database values
+            and constraints
+            :return: the current assignable id
+        """
+        connect = self.get_connector()
+        cursor = connect.cursor()
+        cursor.execute('SELECT MAX(id_meal) FROM {}'.fomat(self.table))
+        connect.close()
+        return int(cursor.fetchall()[0][0]) + 1
 
     @staticmethod
     def check_managed(item):
