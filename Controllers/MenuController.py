@@ -8,7 +8,6 @@ from RecipeManager import RecipeManager
 from ShoppingListManager import ShoppingListManager
 from MealManager import MealManager
 
-
 class MenuController():
     def __init__(self, usr='root', psswd='root'):
         self.user = usr
