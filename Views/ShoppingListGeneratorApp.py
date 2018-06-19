@@ -1,65 +1,89 @@
 from kivy.app import App
-from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 from kivy.uix.listview import ListItemButton
+from kivy.uix.textinput import TextInput
+import re
+import sys
 
 
-class MainButtonList(ListItemButton):
+class MainLayout(BoxLayout):
     pass
 
 
-class MainMenuLayout(GridLayout):
+class Menu(BoxLayout):
+    def display_sub_menu(self, category):
+        self.clear_widgets()
+        self.add_widget(SubMenu(category))
+
+
+class SubMenu(BoxLayout):
+    def __init__(self, category):
+        self.category = category
+        BoxLayout.__init__(self)
+
+    def display_input_menu(self, action):
+        self.clear_widgets()
+        try:
+            name_layout = re.sub(r'(?P<prefix>\w*)\s.*', r'\g<prefix>', action) + self.category.capitalize() + 'Layout'
+            layout = eval('{}()'.format(name_layout))
+            self.add_widget(layout)
+        except TypeError:
+            sys.stderr.write('Invalid type, the category must be wrong : {} '.format(self.category))
+
+
+class CreateIngredientLayout(BoxLayout):
     pass
 
 
-class CreateIngredientLayout(GridLayout):
+class DeleteIngredientLayout(BoxLayout):
     pass
 
 
-class DelIngredientLayout(GridLayout):
+class SetIngredientLayout(BoxLayout):
     pass
 
 
-class SetIngredientLayout(GridLayout):
+class DisplayIngredientLayout(BoxLayout):
     pass
 
 
-class DisplayIngredientLayout(GridLayout):
+class CreateMealLayout(BoxLayout):
     pass
 
 
-class CreateMealLayout(GridLayout):
+class DeleteMealLayout(BoxLayout):
     pass
 
 
-class DelMealLayout(GridLayout):
+class SetMealLayout(BoxLayout):
     pass
 
 
-class SetMealLayout(GridLayout):
+class DisplayMealLayout(BoxLayout):
     pass
 
 
-class DisplayMealLayout(GridLayout):
+class CreateShoppingListLayout(BoxLayout):
     pass
 
 
-class CreateShoppingListLayout(GridLayout):
+class DeleteShoppingListLayout(BoxLayout):
     pass
 
 
-class DelShoppingListLayout(GridLayout):
+class SetShoppingListLayout(BoxLayout):
     pass
 
 
-class SetShoppingListLayout(GridLayout):
-    pass
-
-
-class DisplayShoppingListLayout(GridLayout):
+class DisplayShoppingListLayout(BoxLayout):
     pass
 
 
 class ShoppingListGeneratorApp(App):
     def build(self):
-        return
+        init_main = MainLayout()
+        init_main.add_widget(Menu())
+        return init_main
+
+slga = ShoppingListGeneratorApp().run()
