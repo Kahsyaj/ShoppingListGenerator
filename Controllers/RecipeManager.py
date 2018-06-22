@@ -10,13 +10,13 @@ import sys
 
 class RecipeManager(Manager):
 
-    def __init__(self, usr="root", psswd="root"):
+    def __init__(self, usr="toor", psswd="toor"):
         self.table = "Recipe"
         Manager.__init__(self, self.table, usr, psswd)
 
     def db_create(self, id_meal, ingredients):
         """
-            Create a purchase in the database from an id_shoppinglist and a list of [Ingredient, quantity]
+            Create a recipe in the database from an id_meal and a list of [Ingredient, quantity]
             :paramid_meal : the id of the associated Meal
             :paramingredients : the double list of [Ingredient, quantity] of the recipe
             :return : True if the recipe has been successfully created else, False
@@ -25,8 +25,14 @@ class RecipeManager(Manager):
         cursor = connect.cursor(prepared=True)
         try:
             for ingredient in ingredients:
-                cursor.execute("INSERT INTO `{}` (id_meal, id_ingredient, quantity) VALUES (?, ?, ?)".format(self.table),
-                               (str(id_meal), str(ingredient[0].get_id()), str(ingredient[1])))
+                existing = self.already_exist(id_meal, ingredient[0].get_id())
+                if not existing:
+                    cursor.execute("INSERT INTO `{}` (id_meal, id_ingredient, quantity) VALUES (?, ?, ?)".format(self.table),
+                                   (str(id_meal), str(ingredient[0].get_id()), str(ingredient[1])))
+                else:
+                    qty = existing[0][2] + ingredient[1]
+                    cursor.execute("UPDATE `{}` SET quantity = %s WHERE id_meal = %s AND id_ingredient = %s".format(self.table),
+                                   (str(qty), str(id_meal), str(ingredient[0].get_id())))
             connect.commit()
             connect.close()
         except mariadb.errors.IntegrityError:
@@ -109,7 +115,8 @@ class RecipeManager(Manager):
                        "FROM `{}` INNER JOIN Ingredient ON Ingredient.id_ingredient = Recipe.id_ingredient WHERE "
                        "id_shoppinglist = {} AND Recipe.deleted = 0".format(self.table, pymysql.escape_string(str(id_meal))))
         answ = cursor.fetchall()
-        return Recipe().init(answ)
+        connect.close()
+        return Recipe().init(answ) if answ else None
 
     @staticmethod
     def check_managed(item):
@@ -119,3 +126,18 @@ class RecipeManager(Manager):
         """
         if type(item) is not Recipe:
             raise ValueError('The parameter must be a Recipe instance.')
+
+    def already_exist(self, id_meal, id_ingredient):
+        """
+            From an id_meal and an id_ingredient, return the element loaded if exists else False
+            :param id_meal: the id_meal of the recipe
+            :param id_ingredient: the id ingredient of the recipe
+            :return: the informations of the recipe if exists else False
+        """
+        connect = Manager.get_connector(self)
+        cursor = connect.cursor(prepared=True)
+        cursor.execute("SELECT * FROM `{}` WHERE id_meal = %s AND id_ingredient = %s".format(self.table),
+                       (str(id_meal), str(id_ingredient)))
+        answ = cursor.fetchall()
+        connect.close()
+        return False if not answ else answ

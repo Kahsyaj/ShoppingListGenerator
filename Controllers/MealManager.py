@@ -10,7 +10,7 @@ import sys
 
 class MealManager(Manager):
 
-    def __init__(self, usr="root", psswd="root"):
+    def __init__(self, usr="toor", psswd="toor"):
         self.table = "Meal"
         Manager.__init__(self, self.table, usr, psswd)
 
@@ -31,7 +31,7 @@ class MealManager(Manager):
         except:
             sys.stderr.write("An error occurred with the meal creating.")
             return False
-        id = self.get_current_id()
+        id = self.get_current_id() - 1
         connect.close()
         return Meal(id, name)
 
@@ -124,7 +124,7 @@ class MealManager(Manager):
                                "Ingredient ON Recipe.id_ingredient = Ingredient.id_ingredient WHERE Meal.name_meal = {} "
                                "AND Recipe.deleted = 0".format(self.table, pymysql.escape_string(name)))
             answ = cursor.fetchall()
-            return Meal().init(answ)
+            return Meal().init(answ) if answ else None
 
     def get_current_id(self):
         """
@@ -134,7 +134,7 @@ class MealManager(Manager):
         """
         connect = self.get_connector()
         cursor = connect.cursor()
-        cursor.execute('SELECT MAX(id_meal) FROM {}'.fomat(self.table))
+        cursor.execute('SELECT MAX(id_meal) FROM {}'.format(self.table))
         connect.close()
         return int(cursor.fetchall()[0][0]) + 1
 

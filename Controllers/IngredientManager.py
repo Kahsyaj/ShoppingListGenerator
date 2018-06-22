@@ -10,7 +10,7 @@ import sys
 
 class IngredientManager(Manager):
 
-    def __init__(self, usr="root", psswd="root"):
+    def __init__(self, usr="toor", psswd="toor"):
         self.table = "Ingredient"
         Manager.__init__(self, self.table, usr, psswd)
 
@@ -31,7 +31,7 @@ class IngredientManager(Manager):
         except:
             sys.stderr.write("An error occurred with the ingredient creating.")
             return False
-        id = self.get_current_id()
+        id = self.get_current_id() - 1
         connect.close()
         return Ingredient(id, name)
 
@@ -117,10 +117,10 @@ class IngredientManager(Manager):
                 cursor.execute("SELECT id_ingredient, name_ingredient FROM `{}` WHERE Ingredient.id_ingredient = {} "
                                "AND Ingredient.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
             else:
-                cursor.execute("SELECT id_ingredient, name_ingredient FROM `{}` WHERE Ingredient.name_ingredient = {} "
-                               "AND Ingredient.deleted = 0".format(self.table, pymysql.escape_string(name)))
+                cursor.execute("SELECT id_ingredient, name_ingredient FROM `{}` WHERE Ingredient.name_ingredient = %s "
+                               "AND Ingredient.deleted = 0".format(self.table), (name,))
             answ = cursor.fetchall()
-            return Ingredient().init(answ)
+            return Ingredient().init(answ) if answ else None
 
     def get_current_id(self):
         """

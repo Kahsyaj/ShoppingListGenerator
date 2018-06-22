@@ -11,7 +11,7 @@ import sys
 
 class ShoppingListManager(Manager):
 
-    def __init__(self, usr="root", psswd="root"):
+    def __init__(self, usr="toor", psswd="toor"):
         self.table = "Shoppinglists"
         Manager.__init__(self, self.table, usr, psswd)
 
@@ -32,7 +32,7 @@ class ShoppingListManager(Manager):
         except:
             sys.stderr.write("An error occurred with the purchase creating.")
             return False
-        id = self.get_current_id()
+        id = self.get_current_id() - 1
         connect.close()
         return ShoppingList(id, date)
 
@@ -108,7 +108,7 @@ class ShoppingListManager(Manager):
                        "ON Purchase.id_ingredient = Ingredient.id_ingredient WHERE id_shoppinglist = {} "
                        "AND ShoppingList.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
         answ = cursor.fetchall()
-        return ShoppingList().init(answ)
+        return ShoppingList().init(answ) if answ else None
 
     def get_current_id(self):
         """

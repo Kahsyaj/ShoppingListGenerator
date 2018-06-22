@@ -10,7 +10,7 @@ import sys
 
 class PurchaseManager(Manager):
 
-    def __init__(self, usr="root", psswd="root"):
+    def __init__(self, usr="toor", psswd="toor"):
         self.table = "Purchase"
         Manager.__init__(self, self.table, usr, psswd)
 
@@ -109,7 +109,7 @@ class PurchaseManager(Manager):
                        "INNER JOIN Ingredient ON Ingredient.id_ingredient = Purchase.id_ingredient "
                        "WHERE id_shoppinglist = {} AND Purchase.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
         answ = cursor.fetchall()
-        return Purchase().init(answ)
+        return Purchase().init(answ) if answ else None
 
     @staticmethod
     def check_managed(item):
