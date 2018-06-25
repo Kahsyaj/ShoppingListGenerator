@@ -8,12 +8,13 @@ import mysql.connector as mariadb
 
 
 class Manager:
-    def __init__(self, folder, usr="root", psswd="root"):
+    def __init__(self, folder, usr="toor", psswd="toor", host='localhost'):
         self.folder = "../Save/{}/".format(folder)
         self.ext = ".bak"
         self.database = "ShoppingListGenerator"
         self.user = usr
         self.password = psswd
+        self.host = host
 
     # Getters and setters
     def get_folder(self):
@@ -126,7 +127,14 @@ class Manager:
             :return: connector : the mariadb cursor
         """
         try:
-            connector = mariadb.connect(user=self.user, password=self.password, database=self.database)
+            config = {
+                        'user': self.user,
+                        'password': self.password,
+                        'host': self.host,
+                        'database': self.database,
+                        'raise_on_warnings': True
+                        }
+            connector = mariadb.connect(**config)
         except mariadb.errors.ProgrammingError:
             print("Impossible to connect to the database.\nThe identifiers might not be correct :\nuser : {}"
                   "\npassword : {}\ndatabase : {}".format(self.user, self.password, self.database))

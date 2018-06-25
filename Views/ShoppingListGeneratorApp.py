@@ -7,6 +7,7 @@ from kivy.uix.label import Label
 from Controllers.IngredientManager import IngredientManager
 from Controllers.MealManager import MealManager
 from Controllers.RecipeManager import RecipeManager
+from Controllers.Manager import Manager
 import re
 import sys
 
@@ -143,5 +144,8 @@ class ShoppingListGeneratorApp(App):
         init_main = MainLayout()
         init_main.add_widget(Menu())
         return init_main
+
+#mgr = Manager('')
+#mgr.init_db()
 
 slga = ShoppingListGeneratorApp().run()
