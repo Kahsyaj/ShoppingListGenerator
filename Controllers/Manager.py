@@ -140,3 +140,14 @@ class Manager:
                   "\npassword : {}\ndatabase : {}".format(self.user, self.password, self.database))
             quit(1)
         return connector
+
+    def db_loads(self):
+        """
+        Loads all the elements from the database
+        :return: The elements from database if exist else None
+        """
+        connect = self.get_connector()
+        cursor = connect.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM `{}` WHERE deleted = 0".format(self.table))
+        answ = cursor.fetchall()
+        return answ if answ else None

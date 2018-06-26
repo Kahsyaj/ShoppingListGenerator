@@ -124,6 +124,7 @@ class MealManager(Manager):
                                "Ingredient ON Recipe.id_ingredient = Ingredient.id_ingredient WHERE Meal.name_meal = {} "
                                "AND Recipe.deleted = 0".format(self.table, pymysql.escape_string(name)))
             answ = cursor.fetchall()
+            connect.close()
             return Meal().init(answ) if answ else None
 
     def get_current_id(self):

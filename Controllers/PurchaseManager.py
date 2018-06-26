@@ -109,6 +109,7 @@ class PurchaseManager(Manager):
                        "INNER JOIN Ingredient ON Ingredient.id_ingredient = Purchase.id_ingredient "
                        "WHERE id_shoppinglist = {} AND Purchase.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
         answ = cursor.fetchall()
+        connect.close()
         return Purchase().init(answ) if answ else None
 
     @staticmethod

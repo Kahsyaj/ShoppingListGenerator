@@ -108,6 +108,7 @@ class ShoppingListManager(Manager):
                        "ON Purchase.id_ingredient = Ingredient.id_ingredient WHERE id_shoppinglist = {} "
                        "AND ShoppingList.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
         answ = cursor.fetchall()
+        connect.close()
         return ShoppingList().init(answ) if answ else None
 
     def get_current_id(self):

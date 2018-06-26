@@ -120,6 +120,7 @@ class IngredientManager(Manager):
                 cursor.execute("SELECT id_ingredient, name_ingredient FROM `{}` WHERE Ingredient.name_ingredient = %s "
                                "AND Ingredient.deleted = 0".format(self.table), (name,))
             answ = cursor.fetchall()
+            connect.close()
             return Ingredient().init(answ) if answ else None
 
     def get_current_id(self):

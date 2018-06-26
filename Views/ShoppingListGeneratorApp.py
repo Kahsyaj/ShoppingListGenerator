@@ -1,5 +1,6 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.layout import Layout
 from kivy.properties import ObjectProperty
 from kivy.uix.listview import ListItemButton
 from kivy.uix.textinput import TextInput
@@ -21,8 +22,25 @@ class MenuBehavior(BoxLayout):
         self.clear_widgets()
         self.add_widget(Menu())
 
+    @staticmethod
+    def get_widget(parent_widget, id):
+        for widget in parent_widget.children:
+            if widget.id == id:
+                return widget
+
+    @staticmethod
+    def has_widget(parent_widget, id):
+        for widget in parent_widget.children:
+            if widget.id == id:
+                return True
+        return False
+
 
 class InputMenuBehavior(MenuBehavior):
+    def __init__(self, manager, category=None):
+        self.manager = manager
+        MenuBehavior.__init__(self, category)
+
     def go_back_sub_menu(self):
         self.clear_widgets()
         self.add_widget(SubMenu(self.category))
@@ -43,7 +61,8 @@ class SubMenu(MenuBehavior):
         self.clear_widgets()
         try:
             name_layout = re.sub(r'(?P<prefix>\w*)\s.*', r'\g<prefix>', action) + self.category.capitalize() + 'Layout'
-            layout = eval('{}(self.category)'.format(name_layout))
+            manager_name = self.category.capitalize() + 'Manager'
+            layout = eval('{}({}(), self.category)'.format(name_layout, manager_name))
             self.add_widget(layout)
         except TypeError:
             sys.stderr.write('Invalid type, the category must be wrong : {} '.format(self.category))
@@ -52,8 +71,7 @@ class SubMenu(MenuBehavior):
 
 class CreateIngredientLayout(InputMenuBehavior):
     def create(self, name_ingredient):
-        mgr = IngredientManager()
-        mgr.db_create(name_ingredient)
+        self.manager.db_create(name_ingredient)
         self.go_back_menu()
 
 
@@ -71,10 +89,9 @@ class DisplayIngredientLayout(InputMenuBehavior):
 
 class CreateMealLayout(InputMenuBehavior):
     def create(self, name_meal):
-        mgr = MealManager()
-        meal = mgr.db_create(name_meal)
+        meal = self.manager.db_create(name_meal)
         self.clear_widgets()
-        self.add_widget(AddRecipeLayout(meal.get_id()))
+        self.add_widget(AddRecipeLayout(RecipeManager(), 'recipe', meal.get_id()))
 
 
 class DeleteMealLayout(InputMenuBehavior):
@@ -106,23 +123,25 @@ class DisplayShoppingListLayout(InputMenuBehavior):
 
 
 class AddRecipeLayout(InputMenuBehavior):
-    def __init__(self, id):
+    def __init__(self, manager, category, id):
         self.id_meal = id
-        InputMenuBehavior.__init__(self)
+        InputMenuBehavior.__init__(self, manager, category)
 
     def create(self, name_ing, qty):
         ing_mgr = IngredientManager()
         ing = ing_mgr.db_load(name=name_ing)
         if ing is None:
             ing = ing_mgr.db_create(name_ing)
-        rcp_mgr = RecipeManager()
-        rcp_mgr.db_create(self.id_meal, [[ing, int(qty)]])
+        self.manager.db_create(self.id_meal, [[ing, int(qty)]])
         ing_lst = self.ids['ings_list']
         ing_n = self.ids['name_ingredient'].text
         ing_qty = self.ids['quantity'].text
         ing_lst.rows += 1
-        ing_lst.add_widget(Label(text=ing_n))
-        ing_lst.add_widget(Label(text=ing_qty))
+        if MenuBehavior.has_widget(ing_lst, ing_n):
+            MenuBehavior.get_widget(ing_lst, '{}_qty'.format(ing_n)).text = str(int(MenuBehavior.get_widget(ing_lst, '{}_qty'.format(ing_n)).text) + int(ing_qty))
+        else:
+            ing_lst.add_widget(Label(text=ing_n, id=ing_n))
+            ing_lst.add_widget(Label(text=ing_qty, id='{}_qty'.format(ing_n)))
         ing_n = ""
         ing_qty = ""
 

@@ -135,6 +135,17 @@
             font_size: 30
             on_press: root.create(name_ingredient.text)
 
+<DeleteIngredientLayout>
+    id: create_ingredient_layout
+    orientation: 'vertical'
+    padding: 10
+    spacing: 10
+
+    Label:
+        text: 'Create an ingredient'
+        font_size: 30
+        size_hint: (1, .3)
+
 
 <CreateMealLayout>
     id: create_meal_layout
@@ -224,6 +235,11 @@
         id: ings_list
         rows: 1
         cols: 2
+
+        Label:
+            text: 'Ingredient'
+        Label:
+            text: 'Quantity'
 
     GridLayout:
         rows: 2
