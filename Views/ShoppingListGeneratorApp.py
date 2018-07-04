@@ -4,6 +4,7 @@ from kivy.uix.layout import Layout
 from kivy.properties import ObjectProperty
 from kivy.uix.listview import ListItemButton
 from kivy.uix.textinput import TextInput
+from kivy.uix.listview import ListView
 from kivy.uix.label import Label
 from Controllers.IngredientManager import IngredientManager
 from Controllers.MealManager import MealManager
@@ -68,6 +69,16 @@ class SubMenu(MenuBehavior):
             sys.stderr.write('Invalid type, the category must be wrong : {} '.format(self.category))
 
 
+class ElementsList(ListView):
+    def __init__(self, **kwargs):
+        try:
+            manager = eval(kwargs['category'].capitalize() + 'Manager()')
+            items = manager.get_listview_info()
+        except TypeError:
+            sys.stderr.write('Invalid type, the category must be wrong : {} '.format(kwargs['category']))
+
+        super(ElementsList, self).__init__(item_strings=items)
+
 
 class CreateIngredientLayout(InputMenuBehavior):
     def create(self, name_ingredient):
@@ -79,7 +90,7 @@ class DeleteIngredientLayout(InputMenuBehavior):
     pass
 
 
-class SetIngredientLayout(InputMenuBehavior):
+class SetIngredientLayout(ListView):
     pass
 
 

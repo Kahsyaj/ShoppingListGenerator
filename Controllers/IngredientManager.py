@@ -123,6 +123,18 @@ class IngredientManager(Manager):
             connect.close()
             return Ingredient().init(answ) if answ else None
 
+    def get_listview_info(self):
+        """
+        Returns all the information from Ingredient database (deleted = 0) formatted to display on ListView widget (id, name)
+        :return: answ : The result of the query
+        """
+        connect = self.get_connector()
+        cursor = connect.cursor(dictionary=True)
+        cursor.execute('SELECT id_ingredient, name_ingredient FROM {} WHERE Ingredient.deleted = 0'.format(self.table))
+        answ = cursor.fetchall()
+        connect.close()
+        return answ
+
     def get_current_id(self):
         """
             Returns the current id, usefull to create associated objects in conformity with the database values

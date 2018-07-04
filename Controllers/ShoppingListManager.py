@@ -111,6 +111,18 @@ class ShoppingListManager(Manager):
         connect.close()
         return ShoppingList().init(answ) if answ else None
 
+    def get_listview_info(self):
+        """
+        Returns all the information from ShoppingList database (deleted = 0) formatted to display on ListView widget (id, date)
+        :return: answ : The result of the query
+        """
+        connect = self.get_connector()
+        cursor = connect.cursor(dictionary=True)
+        cursor.execute('SELECT id_shoppinglist, date_shoppinglist FROM {} WHERE ShoppingList.deleted = 0'.format(self.table))
+        answ = cursor.fetchall()
+        connect.close()
+        return answ
+
     def get_current_id(self):
         """
             Returns the current id, usefull to create associated objects in conformity with the database values
