@@ -1,17 +1,23 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.layout import Layout
 from kivy.properties import ObjectProperty
 from kivy.uix.listview import ListItemButton
 from kivy.uix.textinput import TextInput
+from kivy.adapters.listadapter import ListAdapter
+from kivy.uix.scrollview import ScrollView
 from kivy.uix.listview import ListView
+from kivy.uix.button import Button
 from kivy.uix.label import Label
 from Controllers.IngredientManager import IngredientManager
 from Controllers.MealManager import MealManager
 from Controllers.RecipeManager import RecipeManager
+from Controllers.ShoppingListManager import ShoppingListManager
 from Controllers.Manager import Manager
 import re
 import sys
+import string
 
 
 class MenuBehavior(BoxLayout):
@@ -54,7 +60,12 @@ class MainLayout(BoxLayout):
 class Menu(BoxLayout):
     def display_sub_menu(self, category):
         self.clear_widgets()
-        self.add_widget(SubMenu(category))
+        sub_menu = SubMenu(category)
+        elt_lst = ElementsList()
+        elt_lst.display_items(category)
+        sub_menu.add_widget(elt_lst)
+        sub_menu.add_widget(BackCreateButtonsWidget())
+        self.add_widget(sub_menu)
 
 
 class SubMenu(MenuBehavior):
@@ -69,21 +80,39 @@ class SubMenu(MenuBehavior):
             sys.stderr.write('Invalid type, the category must be wrong : {} '.format(self.category))
 
 
-class ElementsList(ListView):
-    def __init__(self, **kwargs):
+class ElementsList(ScrollView):
+    def display_items(self, category):
         try:
-            manager = eval(kwargs['category'].capitalize() + 'Manager()')
+            category = string.capwords(category).replace(' ', '') if ' ' in category else category.capitalize()
+            manager = eval(category + 'Manager()')
             items = manager.get_listview_info()
+            lst = self.ids['list']
+            print(items)
+            for elt in items:
+                print(elt)
+                lst.rows += 1
+                for key, value in elt.items():
+                    print(value)
+                    lst.add_widget(Label(text=str(value)))
+                button_block = GridLayout()
+                button_block.cols = 2
+                button_block.rows = 1
+                button_block.add_widget(Button(text="Set"))
+                button_block.add_widget(Button(text="Del"))
+                lst.add_widget(button_block)
         except TypeError:
-            sys.stderr.write('Invalid type, the category must be wrong : {} '.format(kwargs['category']))
+            sys.stderr.write('Invalid type, the category must be wrong : {} '.format(category))
 
-        super(ElementsList, self).__init__(item_strings=items)
-
+    def create_set_del_bloc
 
 class CreateIngredientLayout(InputMenuBehavior):
     def create(self, name_ingredient):
         self.manager.db_create(name_ingredient)
         self.go_back_menu()
+
+
+class BackCreateButtonsWidget(GridLayout):
+    pass
 
 
 class DeleteIngredientLayout(InputMenuBehavior):
@@ -177,5 +206,6 @@ class ShoppingListGeneratorApp(App):
 
 #mgr = Manager('')
 #mgr.init_db()
+
 
 slga = ShoppingListGeneratorApp().run()

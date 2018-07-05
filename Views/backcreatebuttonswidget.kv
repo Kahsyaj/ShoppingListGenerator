@@ -1,0 +1,20 @@
+#:kivy 1.0.9
+
+<BackCreateButtonsWidget>:
+    padding: 10
+    spacing: 10
+    cols: 2
+    rows: 1
+    size_hint: (1, .2)
+
+    Button:
+        id: back
+        text: 'Back'
+        font_size: 20
+        on_press: self.parent.parent.go_back_menu()
+
+    Button:
+        id: back
+        text: 'Create'
+        font_size: 20
+        on_press: self.parent.parent.go_back_menu()

@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="107647ed-4681-42d8-bba8-c2776f300fd3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Views/backcreatebuttonswidget.kv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Views/elementslist.kv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Views/menu.kv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Views/submenu.kv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/IngredientManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/IngredientManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/MealManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/MealManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/ShoppingListManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ShoppingListManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Views/ShoppingListGeneratorApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/Views/ShoppingListGeneratorApp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Views/shoppinglistgenerator.kv" beforeDir="false" afterPath="$PROJECT_DIR$/Views/shoppinglistgenerator.kv" afterDir="false" />
@@ -18,18 +19,18 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/ShoppingListGenerator$ShoppingListGeneratorApp.coverage" NAME="ShoppingListGeneratorApp Coverage Results" MODIFIED="1530704604696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Views" />
+    <SUITE FILE_PATH="coverage/ShoppingListGenerator$ShoppingListGeneratorApp.coverage" NAME="ShoppingListGeneratorApp Coverage Results" MODIFIED="1530792357464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Views" />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="ShoppingListGenerator" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ShoppingListGeneratorApp.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ShoppingListGeneratorApp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Views/ShoppingListGeneratorApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="79" column="61" selection-start-line="79" selection-start-column="61" selection-end-line="79" selection-end-column="61" />
+            <state relative-caret-position="459">
+              <caret line="105" column="27" selection-start-line="105" selection-start-column="27" selection-end-line="105" selection-end-column="27" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -40,17 +41,53 @@
       <file leaf-file-name="widget.py" pinned="false" current-in-tab="false">
         <entry file="file:///usr/lib/python2.7/dist-packages/kivy/uix/widget.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1250">
-              <caret line="549" column="29" lean-forward="true" selection-start-line="549" selection-start-column="29" selection-end-line="549" selection-end-column="29" />
+            <state relative-caret-position="668">
+              <caret line="549" column="29" selection-start-line="549" selection-start-column="29" selection-end-line="549" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shoppinglistgenerator.kv" pinned="false" current-in-tab="true">
+      <file leaf-file-name="shoppinglistgenerator.kv" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Views/shoppinglistgenerator.kv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="50" column="59" lean-forward="true" selection-start-line="50" selection-start-column="59" selection-end-line="50" selection-end-column="59" />
+            <state relative-caret-position="51">
+              <caret line="3" column="36" selection-start-line="3" selection-start-column="36" selection-end-line="3" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="submenu.kv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Views/submenu.kv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="backcreatebuttonswidget.kv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Views/backcreatebuttonswidget.kv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="26" lean-forward="true" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="elementslist.kv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Views/elementslist.kv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="15" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="menu.kv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Views/menu.kv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="442">
+              <caret line="35" column="32" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -58,26 +95,8 @@
       <file leaf-file-name="MealManager.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Controllers/MealManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="379">
-              <caret line="133" column="11" lean-forward="true" selection-start-line="133" selection-start-column="11" selection-end-line="133" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Manager.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Controllers/Manager.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2550">
-              <caret line="153" selection-start-line="153" selection-end-line="153" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PurchaseManager.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Controllers/PurchaseManager.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1819">
-              <caret line="111" column="22" selection-start-line="111" selection-start-column="22" selection-end-line="111" selection-end-column="22" />
+            <state relative-caret-position="2193">
+              <caret line="133" column="11" selection-start-line="133" selection-start-column="11" selection-end-line="133" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -85,17 +104,8 @@
       <file leaf-file-name="ShoppingListManager.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Controllers/ShoppingListManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="119" column="47" selection-start-line="119" selection-start-column="32" selection-end-line="119" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RecipeManager.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Controllers/RecipeManager.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1938">
-              <caret line="118" column="52" selection-start-line="118" selection-start-column="52" selection-end-line="118" selection-end-column="52" />
+            <state relative-caret-position="153">
+              <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -103,20 +113,11 @@
       <file leaf-file-name="IngredientManager.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Controllers/IngredientManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
+            <state relative-caret-position="2057">
               <caret line="125" column="4" selection-start-line="125" selection-start-column="4" selection-end-line="135" selection-end-column="19" />
               <folding>
                 <element signature="e#297#324#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Ingredient.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Models/Ingredient.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="76" selection-start-column="76" selection-end-column="76" />
             </state>
           </provider>
         </entry>
@@ -189,10 +190,14 @@
         <option value="$PROJECT_DIR$/Controllers/Manager.py" />
         <option value="$PROJECT_DIR$/Controllers/RecipeManager.py" />
         <option value="$PROJECT_DIR$/Controllers/IngredientManager.py" />
-        <option value="$PROJECT_DIR$/Controllers/ShoppingListManager.py" />
         <option value="$PROJECT_DIR$/Controllers/MealManager.py" />
-        <option value="$PROJECT_DIR$/Views/ShoppingListGeneratorApp.py" />
         <option value="$PROJECT_DIR$/Views/shoppinglistgenerator.kv" />
+        <option value="$PROJECT_DIR$/Views/backcreatebuttonswidget.kv" />
+        <option value="$PROJECT_DIR$/Views/menu.kv" />
+        <option value="$PROJECT_DIR$/Controllers/ShoppingListManager.py" />
+        <option value="$PROJECT_DIR$/Views/submenu.kv" />
+        <option value="$PROJECT_DIR$/Views/elementslist.kv" />
+        <option value="$PROJECT_DIR$/Views/ShoppingListGeneratorApp.py" />
       </list>
     </option>
   </component>
@@ -390,7 +395,14 @@
       <option name="project" value="LOCAL" />
       <updated>1530026697440</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Refactoring ui and menus">
+      <created>1530705734277</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1530705734277</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -399,12 +411,12 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.18669528" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27360514" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.1242485" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.12864865" />
       <window_info anchor="right" id="Remote Host" order="3" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.77517104" visible="true" weight="0.071875" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.77517104" visible="true" weight="0.1453125" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="5" />
       <window_info anchor="right" id="SciView" order="4" />
@@ -415,9 +427,9 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,37 +451,10 @@
     <MESSAGE value="Created different layout classes (to be continued)." />
     <MESSAGE value="Continuing views" />
     <MESSAGE value="Fixed connector closing, adding db_loads function and Menu improvments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed connector closing, adding db_loads function and Menu improvments" />
+    <MESSAGE value="Refactoring ui and menus" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring ui and menus" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Controllers/Manager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Controllers/MealManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1980">
-          <caret line="136" column="69" selection-start-line="136" selection-start-column="69" selection-end-line="136" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Controllers/PurchaseManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1695">
-          <caret line="117" column="18" selection-start-line="117" selection-start-column="18" selection-end-line="117" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Controllers/ShoppingListManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1725">
-          <caret line="120" column="78" selection-start-line="120" selection-start-column="78" selection-end-line="120" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Controllers/RecipeManager.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1605">
@@ -750,13 +735,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/lib/python2.7/dist-packages/kivy/uix/widget.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1250">
-          <caret line="549" column="29" lean-forward="true" selection-start-line="549" selection-start-column="29" selection-end-line="549" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Models/Ingredient.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -766,7 +744,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Controllers/IngredientManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
+        <state relative-caret-position="2057">
           <caret line="125" column="4" selection-start-line="125" selection-start-column="4" selection-end-line="135" selection-end-column="19" />
           <folding>
             <element signature="e#297#324#0" expanded="true" />
@@ -776,32 +754,67 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Controllers/MealManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="133" column="11" lean-forward="true" selection-start-line="133" selection-start-column="11" selection-end-line="133" selection-end-column="11" />
+        <state relative-caret-position="2193">
+          <caret line="133" column="11" selection-start-line="133" selection-start-column="11" selection-end-line="133" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python2.7/dist-packages/kivy/uix/widget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="668">
+          <caret line="549" column="29" selection-start-line="549" selection-start-column="29" selection-end-line="549" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Views/menu.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="35" column="32" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Controllers/ShoppingListManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="119" column="47" selection-start-line="119" selection-start-column="32" selection-end-line="119" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Views/ShoppingListGeneratorApp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="79" column="61" selection-start-line="79" selection-start-column="61" selection-end-line="79" selection-end-column="61" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="153">
+          <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Views/shoppinglistgenerator.kv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="50" column="59" lean-forward="true" selection-start-line="50" selection-start-column="59" selection-end-line="50" selection-end-column="59" />
+        <state relative-caret-position="51">
+          <caret line="3" column="36" selection-start-line="3" selection-start-column="36" selection-end-line="3" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Views/elementslist.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="15" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Views/submenu.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Views/backcreatebuttonswidget.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="26" lean-forward="true" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Views/ShoppingListGeneratorApp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="105" column="27" selection-start-line="105" selection-start-column="27" selection-end-line="105" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

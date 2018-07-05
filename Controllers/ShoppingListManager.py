@@ -12,7 +12,7 @@ import sys
 class ShoppingListManager(Manager):
 
     def __init__(self, usr="toor", psswd="toor"):
-        self.table = "Shoppinglists"
+        self.table = "ShoppingList"
         Manager.__init__(self, self.table, usr, psswd)
 
     def db_create(self, date=date.today()):

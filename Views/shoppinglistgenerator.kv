@@ -1,92 +1,10 @@
 #:kivy 1.0.9
 
-<Menu>
-    id: menu
-    orientation: 'vertical'
+#:include menu.kv
+#:include backcreatebuttonswidget.kv
+#:include submenu.kv
+#:include elementslist.kv
 
-    Label:
-        text: 'ShoppingListGenerator'
-        font_size: 35
-        size_hint: (1, .5)
-
-    Label:
-        text: 'Which category would you like to browse ?'
-        font_size: 15
-        size_hint: (1, .2)
-
-    BoxLayout:
-        orientation: 'vertical'
-        padding: 10
-        spacing: 10
-
-        Button:
-            id: ingredient
-            text: "Ingredient"
-            font_size: 30
-            on_press: root.display_sub_menu(self.text)
-
-        Button:
-            id: meal
-            text: "Meal"
-            font_size: 30
-            on_press: root.display_sub_menu(self.text)
-
-        Button:
-            id: shoppinglist
-            text: "Shopping list"
-            font_size: 30
-            on_press: root.display_sub_menu(self.text)
-
-        Button:
-            id: quit
-            text: "Quit"
-            font_size: 30
-            on_press: quit()
-
-<SubMenu>
-    id: sub_menu
-    orientation: 'vertical'
-
-    Label:
-        text: '{} panel'.format(root.category.capitalize())
-        font_size: 15
-        size_hint: (1, .3)
-
-    GridLayout:
-        padding: 10
-        spacing: 10
-        cols: 2
-        rows: 1
-
-        Button:
-            id: back
-            text: 'Back'
-            font_size: 30
-            on_press: root.go_back_menu()
-
-        Button:
-            id: back
-            text: 'Create'
-            font_size: 30
-            on_press: root.go_back_menu()
-    GridLayout:
-        padding: 10
-        cols: 3
-        rows: 1
-
-        Label:
-            text: 'Id'
-            font_size: 15
-
-        Label:
-            text: 'Name'
-            font_size: 15
-
-        Label:
-            text: 'Operations'
-            font_size: 15
-
-    ListView:
 
 
 <CreateIngredientLayout>
@@ -259,6 +177,3 @@
             text: "Add"
             font_size: 30
             on_press: root.create(name_ingredient.text, quantity.text)
-
-<SetIngredientLayout>
-    id: set_ingredient_layout

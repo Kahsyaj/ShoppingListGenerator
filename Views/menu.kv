@@ -1,0 +1,44 @@
+#:kivy 1.0.9
+
+<Menu>
+    id: menu
+    orientation: 'vertical'
+
+    Label:
+        text: 'ShoppingListGenerator'
+        font_size: 35
+        size_hint: (1, .5)
+
+    Label:
+        text: 'Which category would you like to browse ?'
+        font_size: 15
+        size_hint: (1, .2)
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Button:
+            id: ingredient
+            text: "Ingredient"
+            font_size: 30
+            on_press: root.display_sub_menu(self.text)
+
+        Button:
+            id: meal
+            text: "Meal"
+            font_size: 30
+            on_press: root.display_sub_menu(self.text)
+
+        Button:
+            id: shoppinglist
+            text: "Shopping list"
+            font_size: 30
+            on_press: root.display_sub_menu(self.text)
+
+        Button:
+            id: quit
+            text: "Quit"
+            font_size: 30
+            on_press: quit()

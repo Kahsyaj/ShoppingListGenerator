@@ -1,0 +1,30 @@
+#:kivy 1.0.9
+
+<SubMenu>
+    id: sub_menu
+    orientation: 'vertical'
+
+    Label:
+        text: '{} panel'.format(root.category.capitalize())
+        font_size: 20
+        size_hint: (1, .3)
+
+    GridLayout:
+        padding: 10
+        spacing: 5
+        cols: 3
+        rows: 1
+        size_hint: (1, .2)
+
+        Label:
+            text: 'Id'
+            font_size: 15
+
+        Label:
+            text: 'Name'
+            font_size: 15
+
+        Label:
+            text: 'Operations'
+            font_size: 15
+
