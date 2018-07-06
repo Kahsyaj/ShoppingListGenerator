@@ -22,7 +22,7 @@ class Recipe:
         self.id_meal = resp[0]['id_meal']
         self.ingredients = []
         for elt in resp:
-            self.ingredients.append(Ingredient().init([resp]), elt['quantity'])
+            self.ingredients.append([Ingredient().init(resp), elt['quantity']])
         return self
 
     # Getters and setters
@@ -98,3 +98,15 @@ class Recipe:
         for elt in self.ingredients:
             elt[0].describe()
             print("---Quantity---\n{}\n".format(str(elt[1])))
+
+    def to_dict(self):
+        """
+        Returns the dict representation of the object
+        :return: obj_dict : The dictionary representing the object
+        """
+        obj_dict = self.__dict__
+        for elt in obj_dict.values():
+            if type(elt) is list:
+                for ings in elt:
+                    ings[0] = ings[0].to_dict()
+        return obj_dict

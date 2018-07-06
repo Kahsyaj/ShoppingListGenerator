@@ -39,3 +39,6 @@ class Ingredient:
             Display a representation of the object
         """
         print("---Ingredient---\n{}".format(self.name_ingredient))
+
+    def to_dict(self):
+        return self.__dict__

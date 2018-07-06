@@ -6,7 +6,12 @@ from kivy.properties import ObjectProperty
 from kivy.uix.listview import ListItemButton
 from kivy.uix.textinput import TextInput
 from kivy.adapters.listadapter import ListAdapter
+from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView
+from Models.Ingredient import Ingredient
+from Models.Meal import Meal
+from Models.Recipe import Recipe
+from Models.ShoppingList import ShoppingList
 from kivy.uix.listview import ListView
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -22,7 +27,7 @@ import string
 
 class MenuBehavior(BoxLayout):
     def __init__(self, category=None):
-        self.category = category
+        self.category = string.capwords(category).replace(' ', '') if ' ' in category else category.capitalize()
         BoxLayout.__init__(self)
 
     def go_back_menu(self):
@@ -61,49 +66,89 @@ class Menu(BoxLayout):
     def display_sub_menu(self, category):
         self.clear_widgets()
         sub_menu = SubMenu(category)
-        elt_lst = ElementsList()
-        elt_lst.display_items(category)
+        elt_lst = ElementsList(category)
+        elt_lst.display_items()
         sub_menu.add_widget(elt_lst)
         sub_menu.add_widget(BackCreateButtonsWidget())
         self.add_widget(sub_menu)
 
 
 class SubMenu(MenuBehavior):
-    def display_input_menu(self, action):
+    def display_set_item_menu(self, id):
         self.clear_widgets()
-        try:
-            name_layout = re.sub(r'(?P<prefix>\w*)\s.*', r'\g<prefix>', action) + self.category.capitalize() + 'Layout'
-            manager_name = self.category.capitalize() + 'Manager'
-            layout = eval('{}({}(), self.category)'.format(name_layout, manager_name))
-            self.add_widget(layout)
-        except TypeError:
-            sys.stderr.write('Invalid type, the category must be wrong : {} '.format(self.category))
+        label = Label(text="Set {}".format(self.category), font_size=20, size_hint=(1, .3))
+        self.add_widget(label)
+        elt_lst = ElementsList(self.category)
+        elt_lst.display_sets(id)
+        self.add_widget(elt_lst)
 
 
 class ElementsList(ScrollView):
-    def display_items(self, category):
-        try:
-            category = string.capwords(category).replace(' ', '') if ' ' in category else category.capitalize()
-            manager = eval(category + 'Manager()')
-            items = manager.get_listview_info()
-            lst = self.ids['list']
-            print(items)
-            for elt in items:
-                print(elt)
-                lst.rows += 1
-                for key, value in elt.items():
-                    print(value)
-                    lst.add_widget(Label(text=str(value)))
-                button_block = GridLayout()
-                button_block.cols = 2
-                button_block.rows = 1
-                button_block.add_widget(Button(text="Set"))
-                button_block.add_widget(Button(text="Del"))
-                lst.add_widget(button_block)
-        except TypeError:
-            sys.stderr.write('Invalid type, the category must be wrong : {} '.format(category))
+    def __init__(self, category):
+        self.category = string.capwords(category).replace(' ', '') if ' ' in category else category.capitalize()
+        self.manager = eval(self.category + 'Manager()')
+        ScrollView.__init__(self)
 
-    def create_set_del_bloc
+    def display_items(self):
+        try:
+            self.clear_widgets()
+            items = self.manager.get_listview_info()
+            lst = ItemsList()
+            lst.id = 'list'
+            for elt in items:
+                lst.rows += 1
+                for value in elt:
+                    lst.add_widget(Label(text=str(value)))
+                bloc = self.create_set_del_bloc(str(elt[0]))
+                lst.add_widget(bloc)
+            self.add_widget(lst)
+        except TypeError:
+            sys.stderr.write('Invalid type, the category must be wrong : {} '.format(self.category))
+
+    def display_sets(self, id):
+        self.clear_widgets()
+        fields = self.manager.get_db_fields()
+        grid_layout = SetsList(rows=len(fields))
+        for field in fields:
+            field = str(field[0])
+            if 'id' not in field and 'deleted' not in field:
+                grid_layout.add_widget(Label(text=field))
+                grid_layout.add_widget(TextInput(text=self.manager.get_field(field, id)))
+        self.add_widget(grid_layout)
+        rmgr = RecipeManager()
+        mgr = MealManager()
+        meal = mgr.db_load(31)
+        print(meal.recipe.to_dict())
+
+    def del_item(self, id):
+        self.manager.db_delete(id)
+        self.display_items()
+
+    def display_set_item(self, id):
+        fields = self.manager.get_db_fields()
+        self.reinit_lst()
+        lst = self.ids['list']
+
+    def create_set_del_bloc(self, id):
+        button_block = GridLayout()
+        button_block.cols = 2
+        button_block.rows = 1
+        set_button = Button(text="Set", id=id)
+        set_button.bind(on_press=lambda a: self.parent.display_set_item_menu(set_button.id))
+        del_button = Button(text="Del", id=id)
+        del_button.bind(on_press=lambda a: self.del_item(del_button.id))
+        button_block.add_widget(set_button)
+        button_block.add_widget(del_button)
+        return button_block
+
+
+class ItemsList(GridLayout):
+    pass
+
+
+class SetsList(GridLayout):
+    pass
+
 
 class CreateIngredientLayout(InputMenuBehavior):
     def create(self, name_ingredient):

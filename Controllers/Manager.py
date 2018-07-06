@@ -150,4 +150,32 @@ class Manager:
         cursor = connect.cursor(dictionary=True)
         cursor.execute("SELECT * FROM `{}` WHERE deleted = 0".format(self.table))
         answ = cursor.fetchall()
+        connect.close()
         return answ if answ else None
+
+    def get_db_fields(self):
+        """
+        Returns a list of the database's fields
+        :return: answ : The list of fields in the own database
+        """
+        connect = self.get_connector()
+        cursor = connect.cursor()
+        cursor.execute("SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='{}' AND `TABLE_NAME`='{}'".format(self.database, self.table))
+        answ = cursor.fetchall()
+        connect.close()
+        return answ
+
+    def get_field(self, field, id):
+        """
+        Returns the value of a selected field for a given id
+        :param field: The field you want to get
+        :param id: The id of the item you want to get the field
+        :return: answ[0][0] : The value of the field
+        """
+        connect = self.get_connector()
+        cursor = connect.cursor()
+        cursor.execute("SELECT `{}` FROM `{}` WHERE deleted = 0 AND `id_{}` = {}".format(field, self.table,
+                                                                                         self.table.lower(), id))
+        answ = cursor.fetchall()
+        connect.close()
+        return answ[0][0]

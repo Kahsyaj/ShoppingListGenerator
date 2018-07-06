@@ -49,3 +49,6 @@ class Meal:
         """
         print("---Meal---\n{}".format(self.name_meal))
         self.recipe.describe()
+
+    def to_dict(self):
+        return self.__dict__

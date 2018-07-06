@@ -115,14 +115,14 @@ class MealManager(Manager):
             cursor = connect.cursor(dictionary=True)
             if id is not None:
                 cursor.execute("SELECT Meal.id_meal, Meal.name_meal, Recipe.id_ingredient, Ingredient.name_ingredient, "
-                               "Recipe.quantity FROM `{}` INNER JOIN Meal ON Meal.id_meal = Recipe.id_meal INNER JOIN "
+                               "Recipe.quantity FROM `{}` INNER JOIN Recipe ON Meal.id_meal = Recipe.id_meal INNER JOIN "
                                "Ingredient ON Recipe.id_ingredient = Ingredient.id_ingredient WHERE Meal.id_meal = {} "
-                               "AND Recipe.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
+                               "AND Meal.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
             else:
                 cursor.execute("SELECT Meal.id_meal, Meal.name_meal, Recipe.id_ingredient, Ingredient.name_ingredient, "
-                               "Recipe.quantity FROM `{}` INNER JOIN Meal ON Meal.id_meal = Recipe.id_meal INNER JOIN "
+                               "Recipe.quantity FROM `{}` INNER JOIN Recipe ON Meal.id_meal = Recipe.id_meal INNER JOIN "
                                "Ingredient ON Recipe.id_ingredient = Ingredient.id_ingredient WHERE Meal.name_meal = {} "
-                               "AND Recipe.deleted = 0".format(self.table, pymysql.escape_string(name)))
+                               "AND Meal.deleted = 0".format(self.table, pymysql.escape_string(name)))
             answ = cursor.fetchall()
             connect.close()
             return Meal().init(answ) if answ else None
@@ -133,7 +133,7 @@ class MealManager(Manager):
         :return: answ : The result of the query
         """
         connect = self.get_connector()
-        cursor = connect.cursor(dictionary=True)
+        cursor = connect.cursor()
         cursor.execute('SELECT id_meal, name_meal FROM {} WHERE Meal.deleted = 0'.format(self.table))
         answ = cursor.fetchall()
         connect.close()

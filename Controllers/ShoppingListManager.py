@@ -117,7 +117,7 @@ class ShoppingListManager(Manager):
         :return: answ : The result of the query
         """
         connect = self.get_connector()
-        cursor = connect.cursor(dictionary=True)
+        cursor = connect.cursor()
         cursor.execute('SELECT id_shoppinglist, date_shoppinglist FROM {} WHERE ShoppingList.deleted = 0'.format(self.table))
         answ = cursor.fetchall()
         connect.close()
