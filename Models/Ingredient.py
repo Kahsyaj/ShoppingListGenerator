@@ -8,6 +8,7 @@ class Ingredient:
     def __init__(self, id=0, name=""):
             self.id_ingredient = id
             self.name_ingredient = name
+            self.deleted = 0
 
     def init(self, resp):
         """
@@ -19,6 +20,7 @@ class Ingredient:
             raise ValueError('The result of the query is empty.')
         self.id_ingredient = resp[0]['id_ingredient']
         self.name_ingredient = resp[0]['name_ingredient']
+        self.deleted = resp[0]['deleted']
         return self
 
     # Getters and setters
@@ -28,11 +30,17 @@ class Ingredient:
     def get_name(self):
         return self.name_ingredient
 
+    def get_deleted(self):
+        return self.deleted
+
     def set_id(self, new):
         self.id_ingredient = new
 
     def set_name(self, new):
         self.name_ingredient = str(new)
+
+    def set_deleted(self, new):
+        self.deleted = new
 
     def describe(self):
         """

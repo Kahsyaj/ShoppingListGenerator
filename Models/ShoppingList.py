@@ -11,6 +11,7 @@ class ShoppingList:
         self.id_shoppinglist = id
         self.date_shoppinglist = date
         self.purchase = purchase
+        self.deleted = 0
 
     def init(self, resp):
         """
@@ -23,6 +24,7 @@ class ShoppingList:
         self.id_shoppinglist = resp[0]['id_shoppinglist']
         self.date_shoppinglist = resp[0]['date_shoppinglist']
         self.purchase = Purchase().init(resp)
+        self.deleted = resp[0]['deleted']
         return self
 
     # Getters and setters
@@ -35,6 +37,9 @@ class ShoppingList:
     def get_purchase(self):
         return self.purchase
 
+    def get_deleted(self):
+        return self.deleted
+
     def set_id(self, new):
         self.id_shoppinglist = new
 
@@ -43,4 +48,7 @@ class ShoppingList:
 
     def set_purchase(self, new):
         self.purchase = new
+
+    def set_deleted(self, new):
+        self.deleted = new
 

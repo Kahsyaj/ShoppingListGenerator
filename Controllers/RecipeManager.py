@@ -111,7 +111,7 @@ class RecipeManager(Manager):
         """
         connect = Manager.get_connector(self)
         cursor = connect.cursor(dictionary=True)
-        cursor.execute("SELECT Recipe.id_meal, Recipe.id_ingredient, Ingredient.name_ingredient, Recipe.quantity "
+        cursor.execute("SELECT Recipe.id_meal, Recipe.id_ingredient, Ingredient.name_ingredient, Recipe.quantity, Recipe.deleted "
                        "FROM `{}` INNER JOIN Ingredient ON Ingredient.id_ingredient = Recipe.id_ingredient WHERE "
                        "id_shoppinglist = {} AND Recipe.deleted = 0".format(self.table, pymysql.escape_string(str(id_meal))))
         answ = cursor.fetchall()

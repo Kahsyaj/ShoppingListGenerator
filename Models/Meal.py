@@ -10,6 +10,7 @@ class Meal:
         self.id_meal = id
         self.name_meal = str(name)
         self.recipe = recipe
+        self.deleted = 0
 
     def init(self, resp):
         """
@@ -22,6 +23,7 @@ class Meal:
         self.id_meal = resp[0]['id_meal']
         self.name_meal = resp[0]['name_meal']
         self.recipe = Recipe().init(resp)
+        self.deleted = resp[0]['deleted']
         return self
 
     # Getters and setters
@@ -34,6 +36,9 @@ class Meal:
     def get_recipe(self):
         return self.recipe
 
+    def get_deleted(self):
+        return self.deleted
+
     def set_id(self, new):
         self.id_meal = new
 
@@ -43,6 +48,9 @@ class Meal:
     def set_recipe(self, new):
         self.recipe = new
 
+    def set_deleted(self, new):
+        self.deleted = new
+
     def describe(self):
         """
             Display a representation of the object
@@ -51,4 +59,6 @@ class Meal:
         self.recipe.describe()
 
     def to_dict(self):
-        return self.__dict__
+        obj_dict =  self.__dict__
+        obj_dict['recipe'] = obj_dict['recipe'].to_dict()
+        return obj_dict

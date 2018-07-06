@@ -118,7 +118,7 @@ class ElementsList(ScrollView):
         rmgr = RecipeManager()
         mgr = MealManager()
         meal = mgr.db_load(31)
-        print(meal.recipe.to_dict())
+        print(meal.to_dict())
 
     def del_item(self, id):
         self.manager.db_delete(id)

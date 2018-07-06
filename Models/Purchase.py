@@ -9,6 +9,7 @@ class Purchase:
     def __init__(self, id_shoppinglist=0, ingredients=[]):
         self.id_shoppinglist = id_shoppinglist
         self.ingredients = ingredients
+        self.deleted = 0
 
     def init(self, resp):
         """
@@ -20,6 +21,7 @@ class Purchase:
             raise ValueError('The result of the query is empty.')
         self.id_shoppinglist = resp[0]['id_shoppinglist']
         self.ingredients = []
+        self.deleted = resp[0]['deleted']
         for elt in resp:
             self.ingredients.append(Ingredient().init([elt]), elt['quantity'])
         return self
@@ -31,11 +33,17 @@ class Purchase:
     def get_ingredients(self):
         return self.ingredients
 
+    def get_deleted(self):
+        return self.deleted
+
     def set_id(self, new):
         self.id_shoppinglist = new
 
     def set_ingredients(self, new):
         self.ingredients = new
+
+    def set_deleted(self, new):
+        self.deleted = new
 
     def in_purchase(self, ingredient_name):
         """

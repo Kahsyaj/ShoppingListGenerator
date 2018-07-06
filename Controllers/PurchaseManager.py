@@ -105,7 +105,7 @@ class PurchaseManager(Manager):
         """
         connect = self.get_connector()
         cursor = connect.cursor(dictionary=True)
-        cursor.execute("SELECT Purchase.id_shoppinglist, Purchase.id_ingredient, Ingredient.name_ingredient FROM `{}` "
+        cursor.execute("SELECT Purchase.id_shoppinglist, Purchase.id_ingredient, Ingredient.name_ingredient, Purchase.deleted FROM `{}` "
                        "INNER JOIN Ingredient ON Ingredient.id_ingredient = Purchase.id_ingredient "
                        "WHERE id_shoppinglist = {} AND Purchase.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
         answ = cursor.fetchall()

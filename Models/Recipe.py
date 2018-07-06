@@ -10,6 +10,7 @@ class Recipe:
     def __init__(self, id_meal="0", ingredients=[]):
         self.id_meal = id_meal
         self.ingredients = ingredients
+        self.deleted = 0
 
     def init(self, resp):
         """
@@ -21,6 +22,7 @@ class Recipe:
             raise ValueError('The result of the query is empty.')
         self.id_meal = resp[0]['id_meal']
         self.ingredients = []
+        self.deleted = resp[0]['deleted']
         for elt in resp:
             self.ingredients.append([Ingredient().init(resp), elt['quantity']])
         return self
@@ -32,11 +34,17 @@ class Recipe:
     def get_ingredients(self):
         return self.ingredients
 
+    def get_deleted(self):
+        return self.deleted
+
     def set_id_meal(self, new):
         self.id_meal = new
 
     def set_ingredients(self, new):
         self.ingredients = new
+
+    def set_deleted(self, new):
+        self.deleted = new
 
     def in_recipe(self, ingredient_name):
         """

@@ -114,10 +114,10 @@ class IngredientManager(Manager):
             connect = self.get_connector()
             cursor = connect.cursor(dictionary=True)
             if id is not None:
-                cursor.execute("SELECT id_ingredient, name_ingredient FROM `{}` WHERE Ingredient.id_ingredient = {} "
+                cursor.execute("SELECT id_ingredient, name_ingredient, deleted FROM `{}` WHERE Ingredient.id_ingredient = {} "
                                "AND Ingredient.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
             else:
-                cursor.execute("SELECT id_ingredient, name_ingredient FROM `{}` WHERE Ingredient.name_ingredient = %s "
+                cursor.execute("SELECT id_ingredient, name_ingredient, deleted FROM `{}` WHERE Ingredient.name_ingredient = %s "
                                "AND Ingredient.deleted = 0".format(self.table), (name,))
             answ = cursor.fetchall()
             connect.close()

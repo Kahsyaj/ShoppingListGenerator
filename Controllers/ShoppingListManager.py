@@ -103,7 +103,7 @@ class ShoppingListManager(Manager):
         connect = self.get_connector()
         cursor = connect.cursor(dictionary=True)
         cursor.execute("SELECT ShoppingList.id_shoppinglist, ShoppingList.date_shoppinglist, Purchase.id_ingredient, "
-                       "Purchase.quantity, Ingredient.name_ingredient FROM `{}` INNER JOIN Purchase "
+                       "Purchase.quantity, Ingredient.name_ingredient, ShoppingList.deleted FROM `{}` INNER JOIN Purchase "
                        "ON ShoppingList.id_shoppinglist = Purchase.id_shoppinglist INNER JOIN Ingredient "
                        "ON Purchase.id_ingredient = Ingredient.id_ingredient WHERE id_shoppinglist = {} "
                        "AND ShoppingList.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
