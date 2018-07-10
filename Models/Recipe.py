@@ -7,7 +7,7 @@ from Models.Ingredient import Ingredient
 
 class Recipe:
 
-    def __init__(self, id_meal="0", ingredients=[]):
+    def __init__(self, id_meal="0", ingredients=[[Ingredient(), 0]]):
         self.id_meal = id_meal
         self.ingredients = ingredients
         self.deleted = 0
@@ -113,6 +113,7 @@ class Recipe:
         :return: obj_dict : The dictionary representing the object
         """
         obj_dict = self.__dict__
+        print(obj_dict)
         for elt in obj_dict.values():
             if type(elt) is list:
                 for ings in elt:

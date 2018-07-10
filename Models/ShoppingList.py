@@ -7,7 +7,7 @@ from datetime import date
 
 class ShoppingList:
 
-    def __init__(self, id=0, date=date.today(), purchase=None):
+    def __init__(self, id=0, date=date.today(), purchase=Purchase()):
         self.id_shoppinglist = id
         self.date_shoppinglist = date
         self.purchase = purchase
@@ -28,10 +28,10 @@ class ShoppingList:
         return self
 
     # Getters and setters
-    def get_id(self):
+    def get_id_shoppinglist(self):
         return self.id_shoppinglist
 
-    def get_date(self):
+    def get_date_shoppinglist(self):
         return self.date_shoppinglist
 
     def get_purchase(self):
@@ -40,10 +40,10 @@ class ShoppingList:
     def get_deleted(self):
         return self.deleted
 
-    def set_id(self, new):
+    def set_id_shoppinglist(self, new):
         self.id_shoppinglist = new
 
-    def set_date(self, new):
+    def set_date_shoppinglist(self, new):
         self.date_shoppinglist = new
 
     def set_purchase(self, new):

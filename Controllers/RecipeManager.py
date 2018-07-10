@@ -55,7 +55,7 @@ class RecipeManager(Manager):
         try:
             for ingredient in recipe.get_ingredients():
                 cursor.execute("INSERT INTO `{}` (id_meal, id_ingredient, quantity) VALUES (?, ?, ?)"
-                               .format(self.table), (recipe.get_id_meal(), ingredient[0].get_id(), ingredient[1]))
+                               .format(self.table), (recipe.get_id_meal(), ingredient[0].get_id_ingredient(), ingredient[1]))
             connect.commit()
             connect.close()
         except mariadb.errors.IntegrityError:
@@ -94,8 +94,8 @@ class RecipeManager(Manager):
             connect = self.get_connector()
             cursor = connect.cursor()
             for ingredient in recipe.get_ingredients():
-                cursor.execute("UPDATE `{}` SET id_ingredient = %s, quantity = %s WHERE id_meal = %s".format(self.table),
-                               (ingredient[0].get_id(), ingredient[1], recipe.get_id_meal()))
+                cursor.execute('UPDATE `{}` SET `id_ingredient` = "{}", `quantity` = "{}" WHERE `id_meal` = "{}"'
+                               .format(self.table, ingredient[0].get_id_ingredient(), ingredient[1], recipe.get_id_meal()))
             connect.commit()
             connect.close()
         except:
@@ -124,7 +124,7 @@ class RecipeManager(Manager):
             Check if the parameter is from the type of the managed item, if not raise ValueError
             :paramitem : the item to verify
         """
-        if type(item) is not Recipe:
+        if not isinstance(item, Recipe):
             raise ValueError('The parameter must be a Recipe instance.')
 
     def already_exist(self, id_meal, id_ingredient):

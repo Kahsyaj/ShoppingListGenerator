@@ -47,7 +47,7 @@ class ShoppingListManager(Manager):
         cursor = connect.cursor(prepared=True)
         try:
             cursor.execute("INSERT INTO `{}` (id_shoppinglist, date_shoppinglist) VALUES (?, ?)"
-                            .format(self.table), (shoppinglist.get_id(), shoppinglist.get_date()))
+                           .format(self.table), (shoppinglist.get_id_shoppinglist(), shoppinglist.get_date_shoppinglist()))
             connect.commit()
             connect.close()
         except mariadb.errors.IntegrityError:
@@ -85,8 +85,8 @@ class ShoppingListManager(Manager):
         try:
             connect = self.get_connector()
             cursor = connect.cursor()
-            cursor.execute("UPDATE `{}` SET date_shoppinglist = %s WHERE id_shoppinglist = %s".format(self.table),
-                           (shoppinglist.get_date(), shoppinglist.get_id()))
+            cursor.execute('UPDATE `{}` SET date_shoppinglist = "{}" WHERE id_shoppinglist = "{}"'
+                           .format(self.table, shoppinglist.get_date_shoppinglist(), shoppinglist.get_id_shoppinglist()))
             connect.commit()
             connect.close()
         except:
@@ -105,7 +105,7 @@ class ShoppingListManager(Manager):
         cursor.execute("SELECT ShoppingList.id_shoppinglist, ShoppingList.date_shoppinglist, Purchase.id_ingredient, "
                        "Purchase.quantity, Ingredient.name_ingredient, ShoppingList.deleted FROM `{}` INNER JOIN Purchase "
                        "ON ShoppingList.id_shoppinglist = Purchase.id_shoppinglist INNER JOIN Ingredient "
-                       "ON Purchase.id_ingredient = Ingredient.id_ingredient WHERE id_shoppinglist = {} "
+                       "ON Purchase.id_ingredient = Ingredient.id_ingredient WHERE ShoppingList.id_shoppinglist = {} "
                        "AND ShoppingList.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
         answ = cursor.fetchall()
         connect.close()
@@ -135,11 +135,11 @@ class ShoppingListManager(Manager):
         connect.close()
         return int(cursor.fetchall()[0][0]) + 1
 
-    @classmethod
+    @staticmethod
     def check_managed(item):
         """
             Check if the parameter is from the type of the managed item, if not raise ValueError
             :param item : the item to verify
         """
-        if type(item) is not ShoppingList:
+        if not isinstance(item, ShoppingList):
             raise ValueError('The parameter must be a ShoppingList instance.')

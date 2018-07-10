@@ -6,7 +6,7 @@ from Models.Ingredient import Ingredient
 
 class Purchase:
 
-    def __init__(self, id_shoppinglist=0, ingredients=[]):
+    def __init__(self, id_shoppinglist=0, ingredients=[[Ingredient(), 0]]):
         self.id_shoppinglist = id_shoppinglist
         self.ingredients = ingredients
         self.deleted = 0
@@ -23,11 +23,11 @@ class Purchase:
         self.ingredients = []
         self.deleted = resp[0]['deleted']
         for elt in resp:
-            self.ingredients.append(Ingredient().init([elt]), elt['quantity'])
+            self.ingredients.append([Ingredient().init([elt]), elt['quantity']])
         return self
 
     # Getters and setters
-    def get_id(self):
+    def get_id_shoppinglist(self):
         return self.id_shoppinglist
 
     def get_ingredients(self):
@@ -36,7 +36,7 @@ class Purchase:
     def get_deleted(self):
         return self.deleted
 
-    def set_id(self, new):
+    def set_id_shoppinglist(self, new):
         self.id_shoppinglist = new
 
     def set_ingredients(self, new):

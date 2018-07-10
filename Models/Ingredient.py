@@ -24,19 +24,19 @@ class Ingredient:
         return self
 
     # Getters and setters
-    def get_id(self):
+    def get_id_ingredient(self):
         return self.id_ingredient
 
-    def get_name(self):
+    def get_name_ingredient(self):
         return self.name_ingredient
 
     def get_deleted(self):
         return self.deleted
 
-    def set_id(self, new):
+    def set_id_ingredient(self, new):
         self.id_ingredient = new
 
-    def set_name(self, new):
+    def set_name_ingredient(self, new):
         self.name_ingredient = str(new)
 
     def set_deleted(self, new):

@@ -6,7 +6,7 @@ from Models.Recipe import Recipe
 
 class Meal:
 
-    def __init__(self, id=0, name="", recipe=None):
+    def __init__(self, id=0, name="", recipe=Recipe()):
         self.id_meal = id
         self.name_meal = str(name)
         self.recipe = recipe
@@ -27,10 +27,10 @@ class Meal:
         return self
 
     # Getters and setters
-    def get_id(self):
+    def get_id_meal(self):
         return self.id_meal
 
-    def get_name(self):
+    def get_name_meal(self):
         return self.name_meal
 
     def get_recipe(self):
@@ -39,10 +39,10 @@ class Meal:
     def get_deleted(self):
         return self.deleted
 
-    def set_id(self, new):
+    def set_id_meal(self, new):
         self.id_meal = new
 
-    def set_name(self, new):
+    def set_name_meal(self, new):
         self.name_meal = str(new)
 
     def set_recipe(self, new):
@@ -59,6 +59,6 @@ class Meal:
         self.recipe.describe()
 
     def to_dict(self):
-        obj_dict =  self.__dict__
+        obj_dict = self.__dict__
         obj_dict['recipe'] = obj_dict['recipe'].to_dict()
         return obj_dict

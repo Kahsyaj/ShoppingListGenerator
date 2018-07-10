@@ -49,7 +49,7 @@ class PurchaseManager(Manager):
         try:
             for ingredient in purchase.get_ingredients():
                 cursor.execute("INSERT INTO `{}` (id_shoppinglist, id_ingredient, quantity) VALUES (?, ?, ?)"
-                               .format(self.table), (purchase.get_id_shoppinglist(), ingredient[0].get_id(), ingredient[1]))
+                               .format(self.table), (purchase.get_id_shoppinglist(), ingredient[0].get_id_ingredient(), ingredient[1]))
             connect.commit()
             connect.close()
         except mariadb.errors.IntegrityError:
@@ -88,8 +88,8 @@ class PurchaseManager(Manager):
             connect = self.get_connector()
             cursor = connect.cursor()
             for ingredient in purchase.get_ingredients():
-                cursor.execute("UPDATE `{}` SET id_ingredient = %s, quantity = %s WHERE id_shoppinglist = %s".format(self.table),
-                               (ingredient[0].get_id(), ingredient[1], purchase.get_id_shoppinglist()))
+                cursor.execute('UPDATE `{}` SET `id_ingredient` = "{}", `quantity` = "{}" WHERE `id_shoppinglist` = "{}"'
+                               .format(self.table, ingredient[0].get_id_ingredient(), ingredient[1], purchase.get_id_shoppinglist()))
             connect.commit()
             connect.close()
         except:
@@ -118,5 +118,5 @@ class PurchaseManager(Manager):
             Check if the parameter is from the type of the managed item, if not raise ValueError
             :param item : the item to verify
         """
-        if type(item) is not Purchase:
+        if not isinstance(item, Purchase):
             raise ValueError('The parameter must be a Purchase instance.')

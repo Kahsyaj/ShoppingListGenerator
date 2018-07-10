@@ -1,0 +1,20 @@
+#:kivy 1.0.9
+
+<BackSetButtonsWidget>:
+    padding: 10
+    spacing: 10
+    cols: 2
+    rows: 1
+    size_hint: (1, .2)
+
+    Button:
+        id: back
+        text: 'Back'
+        font_size: 20
+        on_press: self.parent.parent.parent.display_sub_menu(self.parent.parent.category)
+
+    Button:
+        id: set
+        text: 'Set'
+        font_size: 20
+        on_press: root.parent.get_widget(root.parent, "elements_list").set_item()

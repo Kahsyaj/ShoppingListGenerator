@@ -46,7 +46,7 @@ class MealManager(Manager):
         cursor = connect.cursor(prepared=True)
         try:
             cursor.execute("INSERT INTO `{}` (id_meal, name_meal) VALUES (?, ?)".format(self.table),
-                           (meal.get_id(), meal.get_name()))
+                           (meal.get_id_meal(), meal.get_name_meal()))
             connect.commit()
             connect.close()
         except mariadb.errors.IntegrityError:
@@ -92,7 +92,7 @@ class MealManager(Manager):
         try:
             connect = self.get_connector()
             cursor = connect.cursor()
-            cursor.execute("UPDATE `{}` SET name_meal = %s WHERE id_meal = %s".format(self.table), (meal.get_name(), str(meal.get_id())))
+            cursor.execute('UPDATE `{}` SET `name_meal` = "{}" WHERE `id_meal` = "{}"'.format(self.table, meal.get_name_meal(), str(meal.get_id_meal())))
             connect.commit()
             connect.close()
         except:
@@ -157,5 +157,5 @@ class MealManager(Manager):
             Check if the parameter is from the type of the managed item, if not raise ValueError
             :param item : the item to verify
         """
-        if type(item) is not Meal:
+        if not isinstance(item, Meal):
             raise ValueError('The parameter must be a Meal instance.')

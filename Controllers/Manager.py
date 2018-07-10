@@ -179,3 +179,17 @@ class Manager:
         answ = cursor.fetchall()
         connect.close()
         return answ[0][0]
+
+    def set_field(self, id, field, value):
+        """
+        Set the value of a simple field given in parameter to a specific entry (given by it's id)
+        :param id : The id of the entry to set
+        :param field: The field to set
+        :param value: The value to affect to the selected field
+        :return: None
+        """
+        connect = self.get_connector()
+        cursor = connect.cursor()
+        cursor.execute('UPDATE `{}` SET `{}` = "{}" WHERE `id_{}` = {}'.format(self.table, field, value, self.table.lower(), id))
+        connect.commit()
+        connect.close()

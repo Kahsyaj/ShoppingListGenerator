@@ -46,7 +46,7 @@ class IngredientManager(Manager):
         cursor = connect.cursor(prepared=True)
         try:
             cursor.execute("INSERT INTO `{}` (id_ingredient, name_ingredient) VALUES (?, ?)"
-                           .format(self.table), (ingredient.get_id(), ingredient.get_name()))
+                           .format(self.table), (ingredient.get_id_ingredient(), ingredient.get_name_ingredient()))
             connect.commit()
             connect.close()
         except mariadb.errors.IntegrityError:
@@ -92,7 +92,7 @@ class IngredientManager(Manager):
         try:
             connect = self.get_connector()
             cursor = connect.cursor()
-            cursor.execute("UPDATE `{}` SET name_ingredient = %s WHERE id_ingredient = %s".format(self.table), (ingredient.get_name(), str(ingredient.get_id())))
+            cursor.execute('UPDATE `{}` SET `name_ingredient` = "{}" WHERE `id_ingredient` = {}'.format(self.table, ingredient.get_name_ingredient(), str(ingredient.get_id_ingredient())))
             connect.commit()
             connect.close()
         except:
@@ -153,5 +153,6 @@ class IngredientManager(Manager):
             Check if the parameter is from the type of the managed item, if not raise ValueError
             :param item : the item to verify
         """
-        if type(item) is not Ingredient:
+        if not isinstance(item, Ingredient):
+            print(type(item))
             raise ValueError('The parameter must be an Ingredient instance.')

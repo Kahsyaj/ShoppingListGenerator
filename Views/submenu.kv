@@ -5,7 +5,7 @@
     orientation: 'vertical'
 
     Label:
-        text: '{} panel'.format(root.category.capitalize())
+        text: '{} panel'.format(root.category)
         font_size: 20
         size_hint: (1, .3)
 
@@ -21,7 +21,7 @@
             font_size: 15
 
         Label:
-            text: 'Name' if root.category != "Shopping list" else 'Date'
+            text: 'Name' if root.category != "ShoppingList" else 'Date'
             font_size: 15
 
         Label:

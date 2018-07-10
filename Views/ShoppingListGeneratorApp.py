@@ -27,7 +27,7 @@ import string
 
 class MenuBehavior(BoxLayout):
     def __init__(self, category=None):
-        self.category = string.capwords(category).replace(' ', '') if ' ' in category else category.capitalize()
+        self.category = category
         BoxLayout.__init__(self)
 
     def go_back_menu(self):
@@ -72,62 +72,111 @@ class Menu(BoxLayout):
         sub_menu.add_widget(BackCreateButtonsWidget())
         self.add_widget(sub_menu)
 
+        rmgr = RecipeManager()
+        mgr = MealManager()
+        meal = mgr.db_load(31)
+        d = meal.to_dict()
+        print(d)
+        print(len(d))
 
 class SubMenu(MenuBehavior):
     def display_set_item_menu(self, id):
         self.clear_widgets()
         label = Label(text="Set {}".format(self.category), font_size=20, size_hint=(1, .3))
         self.add_widget(label)
-        elt_lst = ElementsList(self.category)
-        elt_lst.display_sets(id)
+        elt_lst = ElementsList(self.category, id="elements_list")
+        elt_lst.display_set(id)
+        self.add_widget(elt_lst)
+        self.add_widget(BackSetButtonsWidget())
+
+    def display_create_item_menu(self):
+        self.clear_widgets()
+        label = Label(text="Create {}".format(self.category), font_size=20, size_hint=(1, .3))
+        self.add_widget(label)
+        elt_lst = ElementsList(self.category, id="elements_list")
+        elt_lst.display_create()
         self.add_widget(elt_lst)
 
-
 class ElementsList(ScrollView):
-    def __init__(self, category):
-        self.category = string.capwords(category).replace(' ', '') if ' ' in category else category.capitalize()
+    def __init__(self, category, **kwargs):
+        self.category = category
         self.manager = eval(self.category + 'Manager()')
-        ScrollView.__init__(self)
+        self.managed = eval(self.category + "()")
+        self.item_id = None
+        ScrollView.__init__(self, **kwargs)
 
     def display_items(self):
-        try:
-            self.clear_widgets()
-            items = self.manager.get_listview_info()
-            lst = ItemsList()
-            lst.id = 'list'
-            for elt in items:
-                lst.rows += 1
-                for value in elt:
-                    lst.add_widget(Label(text=str(value)))
-                bloc = self.create_set_del_bloc(str(elt[0]))
-                lst.add_widget(bloc)
-            self.add_widget(lst)
-        except TypeError:
-            sys.stderr.write('Invalid type, the category must be wrong : {} '.format(self.category))
-
-    def display_sets(self, id):
         self.clear_widgets()
+        items = self.manager.get_listview_info()
+        lst = ItemsList()
+        lst.id = 'item_list'
+        for elt in items:
+            lst.rows += 1
+            for value in elt:
+                lst.add_widget(Label(text=str(value)))
+            bloc = self.create_set_del_bloc(str(elt[0]))
+            lst.add_widget(bloc)
+        self.add_widget(lst)
+
+    def display_set(self, id):
+        self.clear_widgets()
+        self.item_id = id
+        self.managed = self.manager.db_load(id)
         fields = self.manager.get_db_fields()
-        grid_layout = SetsList(rows=len(fields))
+        grid_layout = FieldsList(rows=len(fields), id="fields_list")
         for field in fields:
             field = str(field[0])
             if 'id' not in field and 'deleted' not in field:
                 grid_layout.add_widget(Label(text=field))
-                grid_layout.add_widget(TextInput(text=self.manager.get_field(field, id)))
+                grid_layout.add_widget(TextInput(id=field, text=str(self.manager.get_field(field, id))))
         self.add_widget(grid_layout)
-        rmgr = RecipeManager()
-        mgr = MealManager()
-        meal = mgr.db_load(31)
-        print(meal.to_dict())
+
+    def display_create(self):
+        self.clear_widgets()
+        elements = self.managed.to_dict()
+        grid_layout = FieldsList(rows=1, id="fields_list")
+        for key, value in elements.items():
+            if "id" in key or "deleted" in key:
+                continue
+            elif type(value) is not list and type(value) is not dict:
+                grid_layout.add_widget(Label(text=key))
+                grid_layout.add_widget(TextInput(id=key))
+                grid_layout.rows += 1
+            else:
+                grid_layout.add_widget(Label(text=key))
+                grid_layout.add_widget(Label(text=''))
+                grid_layout.rows += 1
+                for elt in value:
+                    if type(elt) is list:
+                        for itm in elt:
+                            print(itm)
+                            if type(itm) is dict:
+                                for sec_key, sec_value in itm.items():
+                                    if "id" in sec_key or "deleted" in sec_key:
+                                        continue
+                                    else:
+                                        grid_layout.add_widget(Label(text=sec_key))
+                                        grid_layout.add_widget(TextInput(id=sec_key))
+                                        grid_layout.rows += 1
+                            else:
+                                grid_layout.add_widget(Label(text="Quantity (grams)"))
+                                grid_layout.add_widget(TextInput(id="quantity"))
+                                grid_layout.rows += 1
+        self.add_widget(grid_layout)
 
     def del_item(self, id):
         self.manager.db_delete(id)
         self.display_items()
 
-    def display_set_item(self, id):
-        fields = self.manager.get_db_fields()
-        self.reinit_lst()
-        lst = self.ids['list']
+    def set_item(self):
+        fields = MenuBehavior.get_widget(self, 'sets_list').children
+        for elt in fields:
+            if elt.id is None:
+                continue
+            else:
+                eval('self.managed.set_{}("{}")'.format(elt.id, elt.text))
+                self.manager.db_save(self.managed)
+        self.parent.parent.display_sub_menu(self.category)
 
     def create_set_del_bloc(self, id):
         button_block = GridLayout()
@@ -141,12 +190,11 @@ class ElementsList(ScrollView):
         button_block.add_widget(del_button)
         return button_block
 
-
 class ItemsList(GridLayout):
     pass
 
 
-class SetsList(GridLayout):
+class FieldsList(GridLayout):
     pass
 
 
@@ -157,6 +205,10 @@ class CreateIngredientLayout(InputMenuBehavior):
 
 
 class BackCreateButtonsWidget(GridLayout):
+    pass
+
+
+class BackSetButtonsWidget(GridLayout):
     pass
 
 
