@@ -1,3 +1,5 @@
+import copy
+
 ####################################################################################
 # Class representing a simple Meal composed with a name, and the recipe associated #
 ####################################################################################
@@ -59,6 +61,10 @@ class Meal:
         self.recipe.describe()
 
     def to_dict(self):
-        obj_dict = self.__dict__
-        obj_dict['recipe'] = obj_dict['recipe'].to_dict()
+        obj_dict = copy.deepcopy(self.__dict__)
+        if 'id_meal' in obj_dict.keys():
+            del obj_dict['id_meal']
+        if 'deleted' in obj_dict.keys():
+            del obj_dict['deleted']
+        obj_dict['recipe'] = obj_dict['recipe'].to_dict() if type(obj_dict['recipe']) is not dict else obj_dict['recipe']
         return obj_dict

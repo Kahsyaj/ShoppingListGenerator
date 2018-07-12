@@ -28,7 +28,7 @@ class MealManager(Manager):
         except mariadb.errors.IntegrityError:
             sys.stderr.write("The meal name {} may already exist.".format(name))
             return False
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the meal creating.")
             return False
         id = self.get_current_id() - 1
@@ -52,7 +52,7 @@ class MealManager(Manager):
         except mariadb.errors.IntegrityError:
             sys.stderr.write("The meal name {} or the meal id {} may already exist.".format(meal.get_name(), str(meal.get_id())))
             return False
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the meal creating.")
             return False
         return True
@@ -77,7 +77,7 @@ class MealManager(Manager):
                     cursor.execute("UPDATE `{}` SET deleted = 1 WHERE name_meal = %s".format(self.table), (name,))
                 connect.commit()
                 connect.close()
-            except:
+            except mariadb.Error:
                 sys.stderr.write("An error occurred with the meal deleting.")
                 return False
             return True
@@ -95,7 +95,7 @@ class MealManager(Manager):
             cursor.execute('UPDATE `{}` SET `name_meal` = "{}" WHERE `id_meal` = "{}"'.format(self.table, meal.get_name_meal(), str(meal.get_id_meal())))
             connect.commit()
             connect.close()
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occured with the meal saving.")
             return False
         return True
@@ -114,7 +114,7 @@ class MealManager(Manager):
             connect = self.get_connector()
             cursor = connect.cursor(dictionary=True)
             if id is not None:
-                cursor.execute("SELECT Meal.id_meal, Meal.name_meal, Recipe.id_ingredient, Ingredient.name_ingredient, "
+                cursor.execute("SELECT Meal.id_meal, Meal.name_meal, Ingredient.id_ingredient, Ingredient.name_ingredient, "
                                "Recipe.quantity, Meal.deleted FROM `{}` INNER JOIN Recipe ON Meal.id_meal = Recipe.id_meal INNER JOIN "
                                "Ingredient ON Recipe.id_ingredient = Ingredient.id_ingredient WHERE Meal.id_meal = {} "
                                "AND Meal.deleted = 0".format(self.table, pymysql.escape_string(str(id))))

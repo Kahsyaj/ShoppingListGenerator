@@ -29,7 +29,7 @@ class ShoppingListManager(Manager):
         except mariadb.errors.IntegrityError:
             sys.stderr.write("You may forgot constraint on foreign keys.")
             return False
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the purchase creating.")
             return False
         id = self.get_current_id() - 1
@@ -53,7 +53,7 @@ class ShoppingListManager(Manager):
         except mariadb.errors.IntegrityError:
             sys.stderr.write("You may have a problem with the primary key.")
             return False
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the shopping list creating.")
             return False
         return True
@@ -70,7 +70,7 @@ class ShoppingListManager(Manager):
             cursor.execute("UPDATE `{}` SET deleted = 1 WHERE id_shoppinglist = %s".format(self.table), (id,))
             connect.commit()
             connect.close()
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the shopping list deleting.")
             return False
         return True
@@ -89,7 +89,7 @@ class ShoppingListManager(Manager):
                            .format(self.table, shoppinglist.get_date_shoppinglist(), shoppinglist.get_id_shoppinglist()))
             connect.commit()
             connect.close()
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the object saving.")
             return False
         return True

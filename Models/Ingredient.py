@@ -1,3 +1,5 @@
+import copy
+
 ############################################################################
 # Class representing a simple Ingredient which could be affected to a Meal #
 ############################################################################
@@ -49,4 +51,10 @@ class Ingredient:
         print("---Ingredient---\n{}".format(self.name_ingredient))
 
     def to_dict(self):
-        return self.__dict__
+        obj_dict = copy.copy(self.__dict__)
+        if 'id_ingredient' in obj_dict.keys():
+            del obj_dict['id_ingredient']
+        if 'deleted' in obj_dict.keys():
+            del obj_dict['deleted']
+        return obj_dict
+

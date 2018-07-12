@@ -1,8 +1,10 @@
+from Purchase import Purchase
+from datetime import date
+
+
 ############################################################################################
 # Class representing a shoppingList containing the purchases needed  a number of Meals set #
 ############################################################################################
-from Purchase import Purchase
-from datetime import date
 
 
 class ShoppingList:

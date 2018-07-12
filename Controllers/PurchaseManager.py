@@ -31,7 +31,7 @@ class PurchaseManager(Manager):
         except mariadb.errors.IntegrityError:
             sys.stderr.write("You may forgot constraint on foreign keys.")
             return False
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the purchase creating.")
             return False
         connect.close()
@@ -55,7 +55,7 @@ class PurchaseManager(Manager):
         except mariadb.errors.IntegrityError:
             sys.stderr.write("You may forgot constraint on foreign keys.")
             return False
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the purchase creating.")
             return False
         return True
@@ -72,7 +72,7 @@ class PurchaseManager(Manager):
             cursor.execute("UPDATE `{}` SET deleted = 1 WHERE id_shoppinglist = %s".format(self.table), (id_shoppinglist,))
             connect.commit()
             connect.close()
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the purchase deleting.")
             return False
         return True
@@ -92,7 +92,7 @@ class PurchaseManager(Manager):
                                .format(self.table, ingredient[0].get_id_ingredient(), ingredient[1], purchase.get_id_shoppinglist()))
             connect.commit()
             connect.close()
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the object saving.")
             return False
         return True

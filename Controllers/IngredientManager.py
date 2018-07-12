@@ -28,7 +28,7 @@ class IngredientManager(Manager):
         except mariadb.errors.IntegrityError:
             sys.stderr.write("The ingredient name \"{}\" may already exists.".format(name))
             return False
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the ingredient creating.")
             return False
         id = self.get_current_id() - 1
@@ -52,7 +52,7 @@ class IngredientManager(Manager):
         except mariadb.errors.IntegrityError:
             sys.stderr.write("You may have a problem with the primary key.")
             return False
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the ingredient creating.")
             return False
         return True
@@ -77,7 +77,7 @@ class IngredientManager(Manager):
                     cursor.execute("UPDATE `{}` SET deleted = 1 WHERE name_ingredient = %s".format(self.table), (name,))
                 connect.commit()
                 connect.close()
-            except:
+            except mariadb.Error:
                 sys.stderr.write("An error occurred with the ingredient deleting.")
                 return False
             return True
@@ -92,10 +92,11 @@ class IngredientManager(Manager):
         try:
             connect = self.get_connector()
             cursor = connect.cursor()
-            cursor.execute('UPDATE `{}` SET `name_ingredient` = "{}" WHERE `id_ingredient` = {}'.format(self.table, ingredient.get_name_ingredient(), str(ingredient.get_id_ingredient())))
+            cursor.execute('UPDATE `{}` SET `name_ingredient` = "{}" WHERE `id_ingredient` = {}'
+                           .format(self.table, ingredient.get_name_ingredient(), str(ingredient.get_id_ingredient())))
             connect.commit()
             connect.close()
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occured with the purchase saving.")
             return False
         return True
@@ -154,5 +155,4 @@ class IngredientManager(Manager):
             :param item : the item to verify
         """
         if not isinstance(item, Ingredient):
-            print(type(item))
             raise ValueError('The parameter must be an Ingredient instance.')

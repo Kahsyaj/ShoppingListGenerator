@@ -25,20 +25,20 @@ class RecipeManager(Manager):
         cursor = connect.cursor(prepared=True)
         try:
             for ingredient in ingredients:
-                existing = self.already_exist(id_meal, ingredient[0].get_id())
+                existing = self.already_exist(id_meal, ingredient['ingredient'].get_id())
                 if not existing:
                     cursor.execute("INSERT INTO `{}` (id_meal, id_ingredient, quantity) VALUES (?, ?, ?)".format(self.table),
-                                   (str(id_meal), str(ingredient[0].get_id()), str(ingredient[1])))
+                                   (str(id_meal), str(ingredient['ingredient'].get_id()), str(ingredient['quantity'])))
                 else:
                     qty = existing[0][2] + ingredient[1]
                     cursor.execute("UPDATE `{}` SET quantity = %s WHERE id_meal = %s AND id_ingredient = %s".format(self.table),
-                                   (str(qty), str(id_meal), str(ingredient[0].get_id())))
+                                   (str(qty), str(id_meal), str(ingredient['ingredient'].get_id())))
             connect.commit()
             connect.close()
         except mariadb.errors.IntegrityError:
             sys.stderr.write("You may forgot constraint on foreign keys.")
             return False
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the recipe creating.")
             return False
         return True
@@ -55,13 +55,13 @@ class RecipeManager(Manager):
         try:
             for ingredient in recipe.get_ingredients():
                 cursor.execute("INSERT INTO `{}` (id_meal, id_ingredient, quantity) VALUES (?, ?, ?)"
-                               .format(self.table), (recipe.get_id_meal(), ingredient[0].get_id_ingredient(), ingredient[1]))
+                               .format(self.table), (recipe.get_id_meal(), ingredient['ingredient'].get_id_ingredient(), ingredient['quantity']))
             connect.commit()
             connect.close()
         except mariadb.errors.IntegrityError:
             sys.stderr.write("You may forgot constraint on foreign keys.")
             return False
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the recipe creating.")
             return False
         return True
@@ -78,7 +78,7 @@ class RecipeManager(Manager):
             cursor.execute("UPDATE `{}` SET deleted = 1 WHERE id_meal = %s".format(self.table), (id_meal,))
             connect.commit()
             connect.close()
-        except:
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the recipe deleting.")
             return False
         return True
@@ -94,14 +94,18 @@ class RecipeManager(Manager):
             connect = self.get_connector()
             cursor = connect.cursor()
             for ingredient in recipe.get_ingredients():
-                cursor.execute('UPDATE `{}` SET `id_ingredient` = "{}", `quantity` = "{}" WHERE `id_meal` = "{}"'
-                               .format(self.table, ingredient[0].get_id_ingredient(), ingredient[1], recipe.get_id_meal()))
+                print(ingredient['ingredient'].get_id_ingredient())
+                print(ingredient['quantity'])
+                print(recipe.get_id_meal())
+                cursor.execute('UPDATE `{}` SET `id_ingredient` = "{}", `quantity` = "{}" WHERE `id_meal` = {}'
+                               .format(self.table, ingredient['ingredient'].get_id_ingredient(), ingredient['quantity'],
+                                       recipe.get_id_meal()))
             connect.commit()
             connect.close()
-        except:
+            return True
+        except mariadb.Error:
             sys.stderr.write("An error occurred with the object saving.")
             return False
-        return True
 
     def db_load(self, id_meal):
         """
