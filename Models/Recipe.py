@@ -53,10 +53,10 @@ class Recipe:
             :param ingredient_name : the name of the ingredient to check
             :return : True if the ingredient is in the recipe else False
         """
-        answ = True
+        answ = False
         for elt in self.ingredients:
             if ingredient_name == elt['ingredient'].get_name_ingredient():
-                answ = False
+                answ = True
                 break
         return answ
 
@@ -104,6 +104,7 @@ class Recipe:
         """
             Display a representation of the object
         """
+        print('---Recipe---\n')
         for elt in self.ingredients:
             elt['ingredient'].describe()
             print("---Quantity---\n{}\n".format(str(elt['quantity'])))

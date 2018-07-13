@@ -48,7 +48,7 @@ class Ingredient:
         """
             Display a representation of the object
         """
-        print("---Ingredient---\n{}".format(self.name_ingredient))
+        print("---Ingredient---\n{} - {}".format(self.name_ingredient, self.id_ingredient))
 
     def to_dict(self):
         obj_dict = copy.copy(self.__dict__)

@@ -21,9 +21,9 @@ class IngredientManager(Manager):
             :return: the object ingredient corresponding to the one created in database if success else False
         """
         connect = self.get_connector()
-        cursor = connect.cursor(prepared=True)
+        cursor = connect.cursor()
         try:
-            cursor.execute("INSERT INTO `{}` (name_ingredient) VALUES (?)".format(self.table), (name,))
+            cursor.execute("INSERT INTO `{}` (name_ingredient) VALUES ('{}')".format(self.table, name))
             connect.commit()
         except mariadb.errors.IntegrityError:
             sys.stderr.write("The ingredient name \"{}\" may already exists.".format(name))
@@ -43,10 +43,10 @@ class IngredientManager(Manager):
         """
         self.check_managed(ingredient)
         connect = self.get_connector()
-        cursor = connect.cursor(prepared=True)
+        cursor = connect.cursor()
         try:
-            cursor.execute("INSERT INTO `{}` (id_ingredient, name_ingredient) VALUES (?, ?)"
-                           .format(self.table), (ingredient.get_id_ingredient(), ingredient.get_name_ingredient()))
+            cursor.execute("INSERT INTO `{}` (id_ingredient, name_ingredient) VALUES ({}, '{}')"
+                           .format(self.table, ingredient.get_id_ingredient(), ingredient.get_name_ingredient()))
             connect.commit()
             connect.close()
         except mariadb.errors.IntegrityError:
@@ -56,6 +56,19 @@ class IngredientManager(Manager):
             sys.stderr.write("An error occurred with the ingredient creating.")
             return False
         return True
+
+    def db_create_temp_ingredient(self):
+        """
+            Creates a temporary Ingredient in database (NULL as name) useful for adding Ingredients fields
+        :return: current_id The id of the created Ingredient
+        """
+        connect = self.get_connector()
+        cursor = connect.cursor()
+        current_id = self.get_current_id()
+        cursor.execute('INSERT INTO `{}` (id_ingredient, name_ingredient) VALUES ({}, NULL)'.format(self.table, current_id))
+        connect.commit()
+        connect.close()
+        return self.db_load(current_id)
 
     def db_delete(self, id=None, name=None):
         """
@@ -118,16 +131,16 @@ class IngredientManager(Manager):
                 cursor.execute("SELECT id_ingredient, name_ingredient, deleted FROM `{}` WHERE Ingredient.id_ingredient = {} "
                                "AND Ingredient.deleted = 0".format(self.table, pymysql.escape_string(str(id))))
             else:
-                cursor.execute("SELECT id_ingredient, name_ingredient, deleted FROM `{}` WHERE Ingredient.name_ingredient = %s "
-                               "AND Ingredient.deleted = 0".format(self.table), (name,))
+                cursor.execute("SELECT id_ingredient, name_ingredient, deleted FROM `{}` WHERE Ingredient.name_ingredient = '{}' "
+                               "AND Ingredient.deleted = 0".format(self.table, name))
             answ = cursor.fetchall()
             connect.close()
             return Ingredient().init(answ) if answ else None
 
     def get_listview_info(self):
         """
-        Returns all the information from Ingredient database (deleted = 0) formatted to display on ListView widget (id, name)
-        :return: answ : The result of the query
+            Returns all the information from Ingredient database (deleted = 0) formatted to display on ListView widget (id, name)
+            :return: answ : The result of the query
         """
         connect = self.get_connector()
         cursor = connect.cursor()
@@ -148,11 +161,34 @@ class IngredientManager(Manager):
         connect.close()
         return int(cursor.fetchall()[0][0]) + 1
 
+    def get_id_from_name(self, name):
+        """
+            From an Ingredient name, returns the associated id
+            :param name: The name of the ingredient
+            :return: answ: The id of the ingredient
+        """
+        connect = self.get_connector()
+        cursor = connect.cursor()
+        cursor.execute('SELECT `id_ingredient` FROM `{}` WHERE `name_ingredient` = "{}"'.format(self.table, name))
+        answ = cursor.fetchall()[0][0]
+        print(answ)
+        return answ
+
+    def wash_temp_ingredient(self):
+        """
+            Delete all ingredients which have no names (temporary ingredients)
+        """
+        connect = self.get_connector()
+        cursor = connect.cursor()
+        cursor.execute('DELETE FROM `{}` WHERE name_ingredient is NULL'.format(self.table))
+        connect.commit()
+        connect.close()
+
     @staticmethod
     def check_managed(item):
         """
             Check if the parameter is from the type of the managed item, if not raise ValueError
-            :param item : the item to verify
+            :param item: the item to verify
         """
         if not isinstance(item, Ingredient):
             raise ValueError('The parameter must be an Ingredient instance.')

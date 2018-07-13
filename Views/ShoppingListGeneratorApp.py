@@ -47,6 +47,11 @@ class MenuBehavior(BoxLayout):
                 return True
         return False
 
+    @staticmethod
+    def gen_blank_cells(widget, nb=1, size_hint=(1, 1)):
+        for n in range(0, nb):
+            widget.add_widget(Label(text="", size_hint=size_hint))
+
 
 class InputMenuBehavior(MenuBehavior):
     def __init__(self, manager, category=None):
@@ -81,7 +86,8 @@ class SubMenu(MenuBehavior):
         elt_lst = ElementsList(self.category, id="elements_list")
         elt_lst.display_set(id)
         self.add_widget(elt_lst)
-        self.add_widget(BackSetButtonsWidget())
+        button_block = BackSetPlusButtonsWidget() if self.category == 'Meal' else BackSetButtonsWidget()
+        self.add_widget(button_block)
 
     def display_create_item_menu(self):
         self.clear_widgets()
@@ -124,24 +130,47 @@ class ElementsList(ScrollView):
             grid_layout.add_widget(TextInput(id=key, text=str(value)))
         self.add_widget(grid_layout)
 
-    def display_set_meal(self, id):
+    def display_set_meal(self, id, load=True):
         self.clear_widgets()
         self.item_id = id
-        self.managed = self.manager.db_load(id)
+        if load:
+            self.managed = self.manager.db_load(id)
         fields = self.managed.to_dict()
         cpt = 1
         rows_nb = len(fields)+(len(fields['recipe']['ingredients'])*len(fields['recipe']['ingredients'][0]))
-        grid_layout = FieldsList(rows=rows_nb, id="fields_list")
+        grid_layout = FieldsList(rows=rows_nb, cols=3, id="fields_list")
         for key, value in fields.items():
             grid_layout.add_widget(Label(text=key))
-            grid_layout.add_widget(TextInput(id=key, text=str(value)) if key != "recipe" else Label(text=""))
+            if key != "recipe":
+                grid_layout.add_widget(TextInput(id=key, text=str(value)))
+                MenuBehavior.gen_blank_cells(grid_layout, size_hint=(0.1, 1))
+            else:
+                MenuBehavior.gen_blank_cells(grid_layout, nb=2, size_hint=(0.1, 1))
         for elt in fields['recipe']['ingredients']:
+            elt['ingredient']['name_ingredient'] = '' if elt['ingredient']['name_ingredient'] is None else elt['ingredient']['name_ingredient']
             grid_layout.add_widget(Label(text='#{} name_ingredient'.format(str(cpt))))
             grid_layout.add_widget(TextInput(id='name_ingredient', text=elt['ingredient']['name_ingredient']))
+            remove_button = Button(text='-', size_hint=(0.1, 1), id=elt['ingredient']['name_ingredient'])
+            remove_button.bind(on_press=lambda n: self.del_set_meal_field(remove_button.id))
+            grid_layout.add_widget(remove_button)
             grid_layout.add_widget(Label(text='quantity (grams)'))
             grid_layout.add_widget(TextInput(id='quantity', text=str(elt['quantity'])))
+            MenuBehavior.gen_blank_cells(grid_layout, size_hint=(0.1, 1))
             cpt += 1
         self.add_widget(grid_layout)
+
+    def del_set_meal_field(self, ing_name):
+        self.managed.recipe.remove_ingredient(ing_name)
+        rcp_mgr = RecipeManager()
+        rcp_mgr.db_save(self.managed.recipe)
+        self.display_set_meal(self.item_id)
+
+    def add_set_meal_field(self):
+        ing_mgr = IngredientManager()
+        recipe_mgr = RecipeManager()
+        tmp_ingredient = ing_mgr.db_create_temp_ingredient()
+        recipe_mgr.db_create(self.item_id, [{'ingredient': tmp_ingredient, 'quantity': 0}])
+        self.display_set_meal(self.item_id)
 
     def display_set(self, id):
         if self.category == 'Ingredient':
@@ -180,6 +209,7 @@ class ElementsList(ScrollView):
                                 grid_layout.add_widget(TextInput(id="quantity"))
                                 grid_layout.rows += 1
         self.add_widget(grid_layout)
+        self.display_set_meal(self.item_id)
 
     def del_item(self, id):
         self.manager.db_delete(id)
@@ -204,19 +234,20 @@ class ElementsList(ScrollView):
     def set_meal(self):
         fields = MenuBehavior.get_widget(self, 'fields_list').children
         rcp_mgr = RecipeManager()
-        cpt = 0
+        cpt = len(self.managed.recipe.ingredients) - 1
         for elt in fields:
             if elt.id is None:
                 continue
             elif elt.id == "quantity":
-                self.managed.recipe.ingredients[cpt][elt.id] = elt.text
+                self.managed.recipe.ingredients[cpt]['quantity'] = elt.text
             elif elt.id == "name_ingredient":
                 self.managed.recipe.ingredients[cpt]['ingredient'].set_name_ingredient(elt.text)
-                cpt += 1
+                cpt -= 1
             elif elt.id == "name_meal":
                 self.managed.set_name_meal(elt.text)
                 self.manager.db_save(self.managed)
         rcp_mgr.db_save(self.managed.recipe)
+        self.display_items()
 
     def create_set_del_bloc(self, id):
         button_block = GridLayout()
@@ -229,6 +260,15 @@ class ElementsList(ScrollView):
         button_block.add_widget(set_button)
         button_block.add_widget(del_button)
         return button_block
+
+    def go_back_and_delete_temp(self):
+        ing_mgr = IngredientManager()
+        rcp_mgr = RecipeManager()
+        for ingredient in self.managed.recipe.ingredients:
+            if ingredient['ingredient'].get_name_ingredient() is None:
+                rcp_mgr.db_delete(self.item_id, ingredient['ingredient'].get_id_ingredient(), soft=False)
+        ing_mgr.wash_temp_ingredient()
+        self.parent.parent.display_sub_menu(self.category)
 
 class ItemsList(GridLayout):
     pass
@@ -251,6 +291,8 @@ class BackCreateButtonsWidget(GridLayout):
 class BackSetButtonsWidget(GridLayout):
     pass
 
+class BackSetPlusButtonsWidget(GridLayout):
+    pass
 
 class DeleteIngredientLayout(InputMenuBehavior):
     pass

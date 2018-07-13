@@ -1,6 +1,6 @@
 #:kivy 1.0.9
 
-<BackSetButtonsWidget>:
+<BackSetPlusButtonsWidget>:
     padding: 10
     spacing: 10
     cols: 3
@@ -11,7 +11,13 @@
         id: back
         text: 'Back'
         font_size: 20
-        on_press: root.parent.parent.display_sub_menu(root.parent.category)
+        on_press: root.parent.get_widget(root.parent, "elements_list").go_back_and_delete_temp()
+
+    Button:
+        id: add
+        text: '+'
+        font_size: 30
+        on_press: root.parent.get_widget(root.parent, "elements_list").add_set_meal_field()
 
     Button:
         id: set
